@@ -1,0 +1,137 @@
+{
+  "intro": "Every message is rooted in Scripture and delivered to equip you for everyday life. Browse our full library, search by speaker or series, and let the Word of God speak to you wherever you are.",
+  "sermons": [
+    {
+      "id": "s1",
+      "title": "Walking in the Light of His Grace",
+      "series": "Living by Faith",
+      "speaker": "Pastor James Okafor",
+      "date": "Oct 19, 2026",
+      "duration": "42 min",
+      "scripture": "John 8:12",
+      "description": "What does it mean to walk in the light when the world around us grows darker? Pastor James unpacks Jesus' bold declaration and shows us how grace illuminates every step of our journey.",
+      "image": "/airo-assets/images/sermons/sermon-1",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Grace",
+        "Faith",
+        "Light"
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "The Word That Transforms",
+      "series": "Foundations",
+      "speaker": "Pastor Sarah Kimani",
+      "date": "Oct 12, 2026",
+      "duration": "38 min",
+      "scripture": "Hebrews 4:12",
+      "description": "The Bible is not merely a book — it is a living, active force that cuts to the very core of who we are. Pastor Sarah explores how daily engagement with Scripture reshapes our minds and renews our lives.",
+      "image": "/airo-assets/images/sermons/sermon-2",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Scripture",
+        "Transformation",
+        "Foundations"
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "Praise Before the Breakthrough",
+      "series": "Worship & War",
+      "speaker": "Pastor James Okafor",
+      "date": "Oct 5, 2026",
+      "duration": "45 min",
+      "scripture": "2 Chronicles 20:21",
+      "description": "Jehoshaphat sent the singers ahead of the army — and God fought the battle. Discover the radical, counter-cultural power of praise as a weapon in your spiritual warfare.",
+      "image": "/airo-assets/images/sermons/sermon-3",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Worship",
+        "Prayer",
+        "Victory"
+      ]
+    },
+    {
+      "id": "s4",
+      "title": "Rooted and Built Up in Him",
+      "series": "Foundations",
+      "speaker": "Pastor Sarah Kimani",
+      "date": "Sep 28, 2026",
+      "duration": "40 min",
+      "scripture": "Colossians 2:6-7",
+      "description": "A tree that weathers every storm is one with deep roots. In this message, Pastor Sarah calls us back to the basics of our faith — rooted in Christ, built up in love, and overflowing with gratitude.",
+      "image": "/airo-assets/images/sermons/sermon-2",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Foundations",
+        "Growth",
+        "Faith"
+      ]
+    },
+    {
+      "id": "s5",
+      "title": "The God Who Restores",
+      "series": "Living by Faith",
+      "speaker": "Pastor James Okafor",
+      "date": "Sep 21, 2026",
+      "duration": "44 min",
+      "scripture": "Joel 2:25",
+      "description": "No matter what the locusts have eaten — your years, your dreams, your relationships — God is in the business of restoration. This message will reignite hope in every area of your life.",
+      "image": "/airo-assets/images/sermons/sermon-1",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Restoration",
+        "Hope",
+        "Grace"
+      ]
+    },
+    {
+      "id": "s6",
+      "title": "Sent to Serve",
+      "series": "Worship & War",
+      "speaker": "Pastor Sarah Kimani",
+      "date": "Sep 14, 2026",
+      "duration": "36 min",
+      "scripture": "Mark 10:45",
+      "description": "Jesus did not come to be served but to serve. Pastor Sarah challenges us to adopt the posture of a servant — not as a burden, but as the most fulfilling way to live out our calling.",
+      "image": "/airo-assets/images/sermons/sermon-3",
+      "videoUrl": "",
+      "audioUrl": "",
+      "tags": [
+        "Service",
+        "Calling",
+        "Discipleship"
+      ]
+    }
+  ],
+  "series": [
+    {
+      "id": "sr1",
+      "name": "Living by Faith"
+    },
+    {
+      "id": "sr2",
+      "name": "Foundations"
+    },
+    {
+      "id": "sr3",
+      "name": "Worship & War"
+    }
+  ],
+  "speakers": [
+    {
+      "id": "sp1",
+      "name": "Pastor James Okafor"
+    },
+    {
+      "id": "sp2",
+      "name": "Pastor Sarah Kimani"
+    }
+  ]
+}

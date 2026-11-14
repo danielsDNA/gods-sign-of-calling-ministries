@@ -1,0 +1,90 @@
+{
+  "intro": "We follow Jesus by serving people, supporting children, working with the poor, and building a healthy, united community. Find a programme below or contact us to learn how to take part.",
+  "scripture": {
+    "text": "The Lord is my light and my salvation—whom shall I fear?",
+    "reference": "Psalm 27:1"
+  },
+  "volunteerCta": {
+    "heading": "Find a Way to Serve",
+    "body": "Contact God's Sign of Calling Revival Ministries to learn more about the weekly programmes and ways to support children and communities.",
+    "buttonLabel": "Get in Touch",
+    "buttonHref": "/contact"
+  },
+  "ministries": [
+    {
+      "id": "m1",
+      "name": "Children & Family Support",
+      "slug": "children-family-support",
+      "description": "We are committed to serving the children of God and strengthening families with care, welcome, and practical support.",
+      "imageSlot": "ministry/children",
+      "leader": {
+        "name": "",
+        "title": "",
+        "photoSlot": ""
+      },
+      "meetingDay": "",
+      "meetingTime": "",
+      "audience": "Children & families"
+    },
+    {
+      "id": "m2",
+      "name": "Community Health & Unity",
+      "slug": "community-health-unity",
+      "description": "We believe in a healthy, unified community and seek to contribute to the wellbeing and transformation of the people we serve.",
+      "imageSlot": "ministry/outreach-missions",
+      "leader": {
+        "name": "",
+        "title": "",
+        "photoSlot": ""
+      },
+      "meetingDay": "",
+      "meetingTime": "",
+      "audience": "Everyone"
+    },
+    {
+      "id": "m3",
+      "name": "Prayer & Deliverance",
+      "slug": "prayer-deliverance",
+      "description": "Gather with us in prayer and worship as we seek God together. Our Thursday Deliverance Service is part of the weekly programme.",
+      "imageSlot": "ministry/prayer",
+      "leader": {
+        "name": "",
+        "title": "",
+        "photoSlot": ""
+      },
+      "meetingDay": "Thursday",
+      "meetingTime": "5:00 PM – 9:30 PM",
+      "audience": "Everyone"
+    },
+    {
+      "id": "m4",
+      "name": "Financial Breakthrough",
+      "slug": "financial-breakthrough",
+      "description": "Join our Tuesday service for prayer and encouragement as we seek God's help and renewal in every area of life.",
+      "imageSlot": "ministry/worship-music",
+      "leader": {
+        "name": "",
+        "title": "",
+        "photoSlot": ""
+      },
+      "meetingDay": "Tuesday",
+      "meetingTime": "5:00 PM – 9:30 PM",
+      "audience": "Everyone"
+    },
+    {
+      "id": "m5",
+      "name": "Counselling & Care",
+      "slug": "counselling-care",
+      "description": "A time for counsel, prayer, and compassionate support. Our weekly counselling programme meets on Saturday afternoons.",
+      "imageSlot": "ministry/hospitality",
+      "leader": {
+        "name": "",
+        "title": "",
+        "photoSlot": ""
+      },
+      "meetingDay": "Saturday",
+      "meetingTime": "2:00 PM",
+      "audience": "Everyone"
+    }
+  ]
+}

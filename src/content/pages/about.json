@@ -1,0 +1,111 @@
+{
+  "hero": {
+    "eyebrow": "Our story",
+    "heading": "Called to Revival. Rooted in Service.",
+    "subheading": "God's Sign of Calling Revival Ministries is a born-again Christian church and registered non-governmental organization, headquartered in Entebbe–Bwebajja, Uganda."
+  },
+  "story": {
+    "heading": "A Ministry Serving God's People",
+    "body": [
+      {
+        "id": "p1",
+        "text": "Serving since 2017, God's Sign of Calling Revival Ministries is a born-again Christian church and registered non-governmental organization based at its headquarters in Entebbe–Bwebajja, Uganda."
+      },
+      {
+        "id": "p2",
+        "text": "The ministry serves communities through branches in Busia, Lira, Wobulenzi, Kayunga, and Wamala. Its calling is grounded in Psalm 27 and in following Jesus through practical care for people."
+      },
+      {
+        "id": "p3",
+        "text": "We believe in building a healthy, united community and serving the children of God in every way we can—working with the poor, promoting human transformation, and sharing the good news of God's Kingdom."
+      }
+    ]
+  },
+  "mission": {
+    "heading": "Following Jesus in Service",
+    "statement": "To follow our Lord and Savior Jesus Christ in working with the poor, promoting human transformation, and bearing witness to the good news of the Kingdom of God.",
+    "description": "Our ministry puts faith into action through compassion, service, and the good news of God's Kingdom.",
+    "evangelism": "To spread the gospel to every people, tribe, or nation.",
+    "evangelismReference": "Isaiah 61:1",
+    "worship": "To create a conducive environment for people to worship and help individuals realize the fruits of worship through devotions, music, and other expressions.",
+    "worshipReference": "Psalm 149:3",
+    "discipleship": "To train children, youth, and elders in the knowledge of Christ and spiritual maturity through Bible exposition, as the church expands with upheld Bible doctrines and disciplines.",
+    "discipleshipReference": "Proverbs 1:7",
+    "missions": "To give hope through charity, education, and sports, while developing talents and skills in music, dance, drama, art and design, hairdressing, baking, catering, shoemaking, decoration, and tailoring. The church also plans to buy land and build a Bible college.",
+    "missionsReference": ""
+  },
+  "vision": {
+    "heading": "A Kingdom Without Borders",
+    "statement": "Establishing the Kingdom of God locally, nationally, and globally.",
+    "description": "We serve from our headquarters in Entebbe–Bwebajja and our branches across Uganda, with a heart for communities everywhere."
+  },
+  "values": [
+    {
+      "id": "v1",
+      "icon": "Heart",
+      "title": "Family",
+      "description": "We welcome and care for people as one family in Christ, serving one another with love and respect."
+    },
+    {
+      "id": "v2",
+      "icon": "Users",
+      "title": "Diversity",
+      "description": "We bring people and communities together, honoring each person as we work toward unity in Christ."
+    },
+    {
+      "id": "v3",
+      "icon": "Star",
+      "title": "Professionalism",
+      "description": "We serve with care, responsibility, and excellence in every ministry and community programme."
+    },
+    {
+      "id": "v4",
+      "icon": "Users",
+      "title": "Communication",
+      "description": "We value honest, respectful communication that builds understanding and strengthens our community."
+    },
+    {
+      "id": "v5",
+      "icon": "Globe",
+      "title": "Success",
+      "description": "We measure success by faithful service, transformed lives, and the growth of God's Kingdom."
+    },
+    {
+      "id": "v6",
+      "icon": "BookOpen",
+      "title": "Integrity",
+      "description": "We seek to keep our word and act with honesty, humility, and faithfulness before God and one another."
+    }
+  ],
+  "stats": [
+    {
+      "id": "st1",
+      "value": "2017",
+      "label": "Serving since"
+    },
+    {
+      "id": "st2",
+      "value": "5+",
+      "label": "Branches across Uganda"
+    },
+    {
+      "id": "st3",
+      "value": "NGO",
+      "label": "Registered organization"
+    },
+    {
+      "id": "st4",
+      "value": "Psalm 27",
+      "label": "Scripture foundation"
+    }
+  ],
+  "team": [],
+  "scripture": {
+    "text": "The Lord is my light and my salvation—whom shall I fear?",
+    "reference": "Psalm 27:1"
+  },
+  "cta": {
+    "heading": "Come and Worship With Us",
+    "body": "Join us at our Entebbe–Bwebajja headquarters or connect with one of our branches in Busia, Lira, Wobulenzi, Kayunga, or Wamala. There is a place for you in our community."
+  }
+}

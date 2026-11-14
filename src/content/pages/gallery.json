@@ -1,0 +1,99 @@
+{
+  "intro": "Every photo tells a story of faith lived out together. From Sunday worship to community outreach, these moments capture a community bound by love, purpose, and the grace of God.",
+  "categories": [
+    "All",
+    "Worship Services",
+    "Community Events",
+    "Baptisms",
+    "Youth & Children",
+    "Outreach & Volunteering",
+    "Weddings & Celebrations",
+    "Choir & Music"
+  ],
+  "photos": [
+    {
+      "id": "g1",
+      "slot": "gallery/slide-1",
+      "alt": "Congregation in worship with hands raised",
+      "category": "Worship Services",
+      "tall": true
+    },
+    {
+      "id": "g2",
+      "slot": "gallery/slide-2",
+      "alt": "Community gathering outdoors",
+      "category": "Community Events",
+      "tall": false
+    },
+    {
+      "id": "g3",
+      "slot": "gallery/slide-3",
+      "alt": "Baptism ceremony at the church",
+      "category": "Baptisms",
+      "tall": true
+    },
+    {
+      "id": "g4",
+      "slot": "gallery/slide-4",
+      "alt": "Church choir singing in worship",
+      "category": "Choir & Music",
+      "tall": false
+    },
+    {
+      "id": "g5",
+      "slot": "gallery/slide-5",
+      "alt": "Volunteers serving the community",
+      "category": "Outreach & Volunteering",
+      "tall": false
+    },
+    {
+      "id": "g6",
+      "slot": "gallery/slide-6",
+      "alt": "Beautiful wedding ceremony at the altar",
+      "category": "Weddings & Celebrations",
+      "tall": true
+    },
+    {
+      "id": "g7",
+      "slot": "gallery/youth-ministry",
+      "alt": "Youth group in worship",
+      "category": "Youth & Children",
+      "tall": false
+    },
+    {
+      "id": "g8",
+      "slot": "gallery/children-ministry",
+      "alt": "Children learning in Sunday school",
+      "category": "Youth & Children",
+      "tall": true
+    },
+    {
+      "id": "g9",
+      "slot": "gallery/outreach-2",
+      "alt": "Church members serving at a food drive",
+      "category": "Outreach & Volunteering",
+      "tall": false
+    },
+    {
+      "id": "g10",
+      "slot": "gallery/worship-2",
+      "alt": "Praise band leading Sunday service",
+      "category": "Worship Services",
+      "tall": false
+    },
+    {
+      "id": "g11",
+      "slot": "gallery/community-2",
+      "alt": "Church family picnic and fellowship",
+      "category": "Community Events",
+      "tall": true
+    },
+    {
+      "id": "g12",
+      "slot": "gallery/choir-2",
+      "alt": "Choir performing at a special service",
+      "category": "Choir & Music",
+      "tall": false
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "gallery/slide-6": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2282079606",
+    "requestedSize": {
+      "width": 400,
+      "height": 600,
+      "fit": "cover"
+    }
+  },
+  "gallery/slide-3": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1787576567",
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "ministry/women": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1708662630",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "pages/home/hero": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1097102726",
+    "requestedSize": {
+      "width": 1920,
+      "height": 1080,
+      "fit": "cover"
+    }
+  },
+  "sermons/sermon-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2230074267",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "gallery/slide-1": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2181513325",
+    "requestedSize": {
+      "width": 400,
+      "height": 600,
+      "fit": "cover"
+    }
+  },
+  "gallery/slide-4": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/938699238",
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "gallery/slide-5": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1453963820",
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "ministry/youth": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2214497218",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "sermons/sermon-3": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1329876200",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "gallery/slide-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2224158591",
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "events/event-1": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2224110744",
+    "requestedSize": {
+      "width": 800,
+      "height": 500,
+      "fit": "cover"
+    }
+  },
+  "ministry/children": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/500610985",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "sermons/sermon-1": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1456526246",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "ministry/men": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2148218840",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "events/event-3": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1772403278",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "events/event-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2272886019",
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    }
+  },
+  "pages/home/about-community": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1427848488",
+    "requestedSize": {
+      "width": 700,
+      "height": 900,
+      "fit": "cover"
+    }
+  },
+  "pages/home/scripture-banner": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2276041486",
+    "requestedSize": {
+      "width": 1920,
+      "height": 600,
+      "fit": "cover"
+    }
+  },
+  "logo/horizontal": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png",
+    "lightSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png",
+    "darkSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/transparent-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png"
+  },
+  "logo/favicon": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png",
+    "lightSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png"
+  },
+  "gallery/children-ministry": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2255392533"
+  },
+  "gallery/choir-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1708661049"
+  },
+  "gallery/youth-ministry": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2265924999"
+  },
+  "gallery/community-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1296161018"
+  },
+  "gallery/worship-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1329876147"
+  },
+  "gallery/outreach-2": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1159484173"
+  },
+  "ministry/leaders/children": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2289112562"
+  },
+  "ministry/worship-music": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2156222059"
+  },
+  "ministry/prayer": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2153028760"
+  },
+  "ministry/leaders/youth": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2282230218"
+  },
+  "ministry/leaders/women": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1796535442"
+  },
+  "ministry/outreach-missions": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2211975745"
+  },
+  "ministry/hospitality": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2239324687"
+  },
+  "ministry/leaders/hospitality": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/856410942"
+  },
+  "ministry/leaders/prayer": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1402572597"
+  },
+  "ministry/leaders/men": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2215525161"
+  },
+  "ministry/leaders/outreach": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1398115884"
+  },
+  "ministry/leaders/worship": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/926907032"
+  }
+}

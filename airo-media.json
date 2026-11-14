@@ -1,0 +1,887 @@
+{
+  "gallery/slide-6": {
+    "requestedSize": {
+      "width": 400,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2282079606",
+    "searchQuery": "church wedding ceremony beautiful altar flowers",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2229717822"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:24.775Z",
+    "lastUpdated": "2026-10-22T10:01:24.775Z",
+    "gettyId": "2282079606",
+    "alternativeGettyIds": [
+      "2229717822"
+    ]
+  },
+  "gallery/slide-3": {
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1787576567",
+    "searchQuery": "baptism water ceremony church faith",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2252525951"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:26.133Z",
+    "lastUpdated": "2026-10-22T10:01:26.133Z",
+    "gettyId": "1787576567",
+    "alternativeGettyIds": [
+      "2252525951"
+    ]
+  },
+  "ministry/women": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1708662630",
+    "searchQuery": "women church group bible study fellowship smiling",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1708662111",
+      "https://img1.wsimg.com/isteam/getty/1708662105"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:26.495Z",
+    "lastUpdated": "2026-10-22T10:01:26.495Z",
+    "gettyId": "1708662630",
+    "alternativeGettyIds": [
+      "1708662111",
+      "1708662105"
+    ]
+  },
+  "pages/home/hero": {
+    "requestedSize": {
+      "width": 1920,
+      "height": 1080,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1097102726",
+    "searchQuery": "church interior worship light rays congregation",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2257119030",
+      "https://img1.wsimg.com/isteam/getty/2289438541"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:27.337Z",
+    "lastUpdated": "2026-10-22T10:01:27.337Z",
+    "gettyId": "1097102726",
+    "alternativeGettyIds": [
+      "2257119030",
+      "2289438541"
+    ]
+  },
+  "sermons/sermon-2": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2230074267",
+    "searchQuery": "open bible scripture study light warm",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2257520123",
+      "https://img1.wsimg.com/isteam/getty/2231921262"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:29.036Z",
+    "lastUpdated": "2026-10-22T10:01:29.036Z",
+    "gettyId": "2230074267",
+    "alternativeGettyIds": [
+      "2257520123",
+      "2231921262"
+    ]
+  },
+  "gallery/slide-1": {
+    "requestedSize": {
+      "width": 400,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2181513325",
+    "searchQuery": "church congregation worship service hands raised praise",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2285737705"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:29.926Z",
+    "lastUpdated": "2026-10-22T10:01:29.926Z",
+    "gettyId": "2181513325",
+    "alternativeGettyIds": [
+      "2285737705"
+    ]
+  },
+  "gallery/slide-4": {
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/938699238",
+    "searchQuery": "church choir singing worship music performance",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1400577271"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:31.044Z",
+    "lastUpdated": "2026-10-22T10:01:31.044Z",
+    "gettyId": "938699238",
+    "alternativeGettyIds": [
+      "1400577271"
+    ]
+  },
+  "gallery/slide-5": {
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1453963820",
+    "searchQuery": "church volunteers serving community outreach food",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2225120511"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:31.430Z",
+    "lastUpdated": "2026-10-22T10:01:31.430Z",
+    "gettyId": "1453963820",
+    "alternativeGettyIds": [
+      "2225120511"
+    ]
+  },
+  "ministry/youth": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2214497218",
+    "searchQuery": "youth group church teenagers worship hands raised",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/154934260",
+      "https://img1.wsimg.com/isteam/getty/2277204828"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:31.802Z",
+    "lastUpdated": "2026-10-22T10:01:31.802Z",
+    "gettyId": "2214497218",
+    "alternativeGettyIds": [
+      "154934260",
+      "2277204828"
+    ]
+  },
+  "sermons/sermon-3": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1329876200",
+    "searchQuery": "worship music praise band church stage lights",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1329876128",
+      "https://img1.wsimg.com/isteam/getty/1329876147"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:33.475Z",
+    "lastUpdated": "2026-10-22T10:01:33.475Z",
+    "gettyId": "1329876200",
+    "alternativeGettyIds": [
+      "1329876128",
+      "1329876147"
+    ]
+  },
+  "gallery/slide-2": {
+    "requestedSize": {
+      "width": 400,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2224158591",
+    "searchQuery": "church community event outdoor gathering celebration",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2261731185"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:34.711Z",
+    "lastUpdated": "2026-10-22T10:01:34.711Z",
+    "gettyId": "2224158591",
+    "alternativeGettyIds": [
+      "2261731185"
+    ]
+  },
+  "events/event-1": {
+    "requestedSize": {
+      "width": 800,
+      "height": 500,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2224110744",
+    "searchQuery": "church conference event stage worship large gathering",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/179021405"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:35.212Z",
+    "lastUpdated": "2026-10-22T10:01:35.212Z",
+    "gettyId": "2224110744",
+    "alternativeGettyIds": [
+      "179021405"
+    ]
+  },
+  "ministry/children": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/500610985",
+    "searchQuery": "children church sunday school kids learning faith",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/500593977",
+      "https://img1.wsimg.com/isteam/getty/518498013"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:36.074Z",
+    "lastUpdated": "2026-10-22T10:01:36.074Z",
+    "gettyId": "500610985",
+    "alternativeGettyIds": [
+      "500593977",
+      "518498013"
+    ]
+  },
+  "sermons/sermon-1": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1456526246",
+    "searchQuery": "pastor preaching pulpit church sermon speaking",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1456526245",
+      "https://img1.wsimg.com/isteam/getty/2176799532"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:36.832Z",
+    "lastUpdated": "2026-10-22T10:01:36.832Z",
+    "gettyId": "1456526246",
+    "alternativeGettyIds": [
+      "1456526245",
+      "2176799532"
+    ]
+  },
+  "ministry/men": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2148218840",
+    "searchQuery": "men church group prayer fellowship community",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1681769473",
+      "https://img1.wsimg.com/isteam/getty/2171278781"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:37.627Z",
+    "lastUpdated": "2026-10-22T10:01:37.627Z",
+    "gettyId": "2148218840",
+    "alternativeGettyIds": [
+      "1681769473",
+      "2171278781"
+    ]
+  },
+  "events/event-3": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1772403278",
+    "searchQuery": "church family picnic outdoor community fun",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1328482080"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:38.173Z",
+    "lastUpdated": "2026-10-22T10:01:38.173Z",
+    "gettyId": "1772403278",
+    "alternativeGettyIds": [
+      "1328482080"
+    ]
+  },
+  "events/event-2": {
+    "requestedSize": {
+      "width": 600,
+      "height": 400,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2272886019",
+    "searchQuery": "prayer night candles church evening service atmosphere",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2272719653"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:39.548Z",
+    "lastUpdated": "2026-10-22T10:01:39.548Z",
+    "gettyId": "2272886019",
+    "alternativeGettyIds": [
+      "2272719653"
+    ]
+  },
+  "pages/home/about-community": {
+    "requestedSize": {
+      "width": 700,
+      "height": 900,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1427848488",
+    "searchQuery": "diverse church community people gathered worship smiling",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2167271505",
+      "https://img1.wsimg.com/isteam/getty/184874152"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:41.019Z",
+    "lastUpdated": "2026-10-22T10:01:41.019Z",
+    "gettyId": "1427848488",
+    "alternativeGettyIds": [
+      "2167271505",
+      "184874152"
+    ]
+  },
+  "pages/home/scripture-banner": {
+    "requestedSize": {
+      "width": 1920,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2276041486",
+    "searchQuery": "bokeh light church candles warm golden atmosphere",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2245821964",
+      "https://img1.wsimg.com/isteam/getty/2177633478"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:01:43.712Z",
+    "lastUpdated": "2026-10-22T10:01:43.712Z",
+    "gettyId": "2276041486",
+    "alternativeGettyIds": [
+      "2245821964",
+      "2177633478"
+    ]
+  },
+  "logo/horizontal": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png",
+    "searchQuery": "horizontal",
+    "alternatives": [
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/transparent-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png"
+    ],
+    "logoSourceMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png": {
+        "sessionId": "86debbc9-8ae8-4756-bf7c-53cad52378f9",
+        "logoId": "f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b",
+        "groupId": "0d1d7d31-58c7-4261-bb91-5df92e77a2e8"
+      },
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/transparent-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png": {
+        "sessionId": "3efc7a00-7b9a-4f1a-9b88-48368232cab4",
+        "logoId": "a59171fc-c15e-45f3-9360-2479201f0321",
+        "groupId": "0d1d7d31-58c7-4261-bb91-5df92e77a2e8"
+      }
+    },
+    "logoGroupId": "0d1d7d31-58c7-4261-bb91-5df92e77a2e8",
+    "solidUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-original-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png",
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/transparent-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/original-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png"
+    },
+    "mockupUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+    },
+    "landscapeMockupUrlMap": {},
+    "productMockupsMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png": [
+        {
+          "type": "mug",
+          "label": "Mug",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-mug-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+        },
+        {
+          "type": "card",
+          "label": "Business Card",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-card-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+        },
+        {
+          "type": "tshirt",
+          "label": "T-Shirt",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-tshirt-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+        },
+        {
+          "type": "box",
+          "label": "Packaging",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-box-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+        }
+      ]
+    },
+    "productMockups": [
+      {
+        "type": "mug",
+        "label": "Mug",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-mug-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+      },
+      {
+        "type": "card",
+        "label": "Business Card",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-card-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+      },
+      {
+        "type": "tshirt",
+        "label": "T-Shirt",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-tshirt-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+      },
+      {
+        "type": "box",
+        "label": "Packaging",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-mockup-box-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png"
+      }
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:02:35.448Z",
+    "lastUpdated": "2026-10-22T10:15:29.980Z",
+    "surfaceMode": "dark",
+    "generatedForSurfaceColor": "#1c1917",
+    "lightSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/86debbc9-8ae8-4756-bf7c-53cad52378f9/horizontal-transparent-f6b35b11-ea2c-4f81-82d0-6b2f2aa9299b/logo-logo.png",
+    "darkSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/3efc7a00-7b9a-4f1a-9b88-48368232cab4/transparent-a59171fc-c15e-45f3-9360-2479201f0321/logo-logo.png"
+  },
+  "logo/favicon": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png",
+    "searchQuery": "favicon",
+    "alternatives": [],
+    "logoSourceMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png": {
+        "sessionId": "f158af20-7553-44c2-adc0-a9f2252870cc",
+        "logoId": "b607e29f-ee1e-4ba1-a15c-935f99e4e161",
+        "groupId": "0d1d7d31-58c7-4261-bb91-5df92e77a2e8"
+      }
+    },
+    "logoGroupId": "0d1d7d31-58c7-4261-bb91-5df92e77a2e8",
+    "solidUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-original-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png"
+    },
+    "userModified": false,
+    "createdAt": "2026-10-22T10:02:47.985Z",
+    "lastUpdated": "2026-10-22T10:03:00.687Z",
+    "surfaceMode": "light",
+    "generatedForSurfaceColor": "#fafaf8",
+    "lightSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/85498b6a-3eb3-4a2d-bf13-84968051d188/session/f158af20-7553-44c2-adc0-a9f2252870cc/favicon-transparent-b607e29f-ee1e-4ba1-a15c-935f99e4e161/logo-logo.png"
+  },
+  "gallery/children-ministry": {
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2255392533",
+    "searchQuery": "children sunday school church kids learning faith smiling",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/183867522",
+      "https://img1.wsimg.com/isteam/getty/472977592"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:24.362Z",
+    "lastUpdated": "2026-10-22T10:24:24.362Z",
+    "gettyId": "2255392533",
+    "alternativeGettyIds": [
+      "183867522",
+      "472977592"
+    ]
+  },
+  "gallery/choir-2": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1708661049",
+    "searchQuery": "church choir singing performance special service robes",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/477491171",
+      "https://img1.wsimg.com/isteam/getty/1573408382"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:26.208Z",
+    "lastUpdated": "2026-10-22T10:24:26.208Z",
+    "gettyId": "1708661049",
+    "alternativeGettyIds": [
+      "477491171",
+      "1573408382"
+    ]
+  },
+  "gallery/youth-ministry": {
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2265924999",
+    "searchQuery": "youth group church teenagers praise worship joyful",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/183879761",
+      "https://img1.wsimg.com/isteam/getty/2097854356"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:27.030Z",
+    "lastUpdated": "2026-10-22T10:24:27.030Z",
+    "gettyId": "2265924999",
+    "alternativeGettyIds": [
+      "183879761",
+      "2097854356"
+    ]
+  },
+  "gallery/community-2": {
+    "orientations": "vertical",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1296161018",
+    "searchQuery": "church family picnic outdoor fellowship community gathering",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2204356796",
+      "https://img1.wsimg.com/isteam/getty/543482802"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:28.588Z",
+    "lastUpdated": "2026-10-22T10:24:28.588Z",
+    "gettyId": "1296161018",
+    "alternativeGettyIds": [
+      "2204356796",
+      "543482802"
+    ]
+  },
+  "gallery/worship-2": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1329876147",
+    "searchQuery": "praise band church stage worship music lights",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1329876200",
+      "https://img1.wsimg.com/isteam/getty/1329876090"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:29.905Z",
+    "lastUpdated": "2026-10-22T10:24:29.905Z",
+    "gettyId": "1329876147",
+    "alternativeGettyIds": [
+      "1329876200",
+      "1329876090"
+    ]
+  },
+  "gallery/outreach-2": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1159484173",
+    "searchQuery": "church volunteers food drive community service outreach",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1153347650",
+      "https://img1.wsimg.com/isteam/getty/2155998567"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:24:31.143Z",
+    "lastUpdated": "2026-10-22T10:24:31.143Z",
+    "gettyId": "1159484173",
+    "alternativeGettyIds": [
+      "1153347650",
+      "2155998567"
+    ]
+  },
+  "ministry/leaders/children": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2289112562",
+    "searchQuery": "friendly woman teacher smiling professional portrait headshot",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1494324629",
+      "https://img1.wsimg.com/isteam/getty/1062520618"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:03.491Z",
+    "lastUpdated": "2026-10-22T10:29:03.491Z",
+    "gettyId": "2289112562",
+    "alternativeGettyIds": [
+      "1494324629",
+      "1062520618"
+    ]
+  },
+  "ministry/worship-music": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2156222059",
+    "searchQuery": "worship band church stage music praise singers",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1328190544",
+      "https://img1.wsimg.com/isteam/getty/2230296340"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:04.827Z",
+    "lastUpdated": "2026-10-22T10:29:04.827Z",
+    "gettyId": "2156222059",
+    "alternativeGettyIds": [
+      "1328190544",
+      "2230296340"
+    ]
+  },
+  "ministry/prayer": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2153028760",
+    "searchQuery": "church prayer group hands folded worship intercession",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2148218806",
+      "https://img1.wsimg.com/isteam/getty/1461493495"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:09.265Z",
+    "lastUpdated": "2026-10-22T10:29:09.265Z",
+    "gettyId": "2153028760",
+    "alternativeGettyIds": [
+      "2148218806",
+      "1461493495"
+    ]
+  },
+  "ministry/leaders/youth": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2282230218",
+    "searchQuery": "young male pastor leader smiling professional portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1050933564",
+      "https://img1.wsimg.com/isteam/getty/1598833803"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:11.810Z",
+    "lastUpdated": "2026-10-22T10:29:11.810Z",
+    "gettyId": "2282230218",
+    "alternativeGettyIds": [
+      "1050933564",
+      "1598833803"
+    ]
+  },
+  "ministry/leaders/women": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1796535442",
+    "searchQuery": "mature woman church leader smiling warm professional portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2295239674",
+      "https://img1.wsimg.com/isteam/getty/2185939143"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:13.796Z",
+    "lastUpdated": "2026-10-22T10:29:13.796Z",
+    "gettyId": "1796535442",
+    "alternativeGettyIds": [
+      "2295239674",
+      "2185939143"
+    ]
+  },
+  "ministry/outreach-missions": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2211975745",
+    "searchQuery": "church outreach missions community service volunteers helping",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2257027478",
+      "https://img1.wsimg.com/isteam/getty/1479370151"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:18.240Z",
+    "lastUpdated": "2026-10-22T10:29:18.240Z",
+    "gettyId": "2211975745",
+    "alternativeGettyIds": [
+      "2257027478",
+      "1479370151"
+    ]
+  },
+  "ministry/hospitality": {
+    "orientations": "horizontal",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2239324687",
+    "searchQuery": "church hospitality welcome ushers greeting congregation smiling",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2176799574",
+      "https://img1.wsimg.com/isteam/getty/1456526256"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:19.849Z",
+    "lastUpdated": "2026-10-22T10:29:19.849Z",
+    "gettyId": "2239324687",
+    "alternativeGettyIds": [
+      "2176799574",
+      "1456526256"
+    ]
+  },
+  "ministry/leaders/hospitality": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/856410942",
+    "searchQuery": "friendly man usher church greeter smiling welcoming portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1062523164",
+      "https://img1.wsimg.com/isteam/getty/1062525104"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:20.167Z",
+    "lastUpdated": "2026-10-22T10:29:20.167Z",
+    "gettyId": "856410942",
+    "alternativeGettyIds": [
+      "1062523164",
+      "1062525104"
+    ]
+  },
+  "ministry/leaders/prayer": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1402572597",
+    "searchQuery": "older woman prayer leader church smiling gentle portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1796535442",
+      "https://img1.wsimg.com/isteam/getty/2185939305"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:22.154Z",
+    "lastUpdated": "2026-10-22T10:29:22.154Z",
+    "gettyId": "1402572597",
+    "alternativeGettyIds": [
+      "1796535442",
+      "2185939305"
+    ]
+  },
+  "ministry/leaders/men": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2215525161",
+    "searchQuery": "mature man pastor leader smiling confident professional portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2156057671",
+      "https://img1.wsimg.com/isteam/getty/2156057670"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:23.046Z",
+    "lastUpdated": "2026-10-22T10:29:23.046Z",
+    "gettyId": "2215525161",
+    "alternativeGettyIds": [
+      "2156057671",
+      "2156057670"
+    ]
+  },
+  "ministry/leaders/outreach": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1398115884",
+    "searchQuery": "man community leader smiling warm professional portrait headshot",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1355110818",
+      "https://img1.wsimg.com/isteam/getty/1778368751"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:23.846Z",
+    "lastUpdated": "2026-10-22T10:29:23.846Z",
+    "gettyId": "1398115884",
+    "alternativeGettyIds": [
+      "1355110818",
+      "1778368751"
+    ]
+  },
+  "ministry/leaders/worship": {
+    "orientations": "square",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/926907032",
+    "searchQuery": "young woman smiling professional portrait headshot",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1961683543",
+      "https://img1.wsimg.com/isteam/getty/1450790123"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-22T10:29:42.433Z",
+    "lastUpdated": "2026-10-22T10:29:42.433Z",
+    "gettyId": "926907032",
+    "alternativeGettyIds": [
+      "1961683543",
+      "1450790123"
+    ]
+  }
+}

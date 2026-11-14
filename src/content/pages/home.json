@@ -1,0 +1,69 @@
+{
+  "sermons": [
+    {
+      "id": "1",
+      "title": "Walking in the Light of His Grace",
+      "series": "Living by Faith",
+      "speaker": "Pastor James Okafor",
+      "date": "Oct 19, 2026",
+      "scripture": "John 8:12",
+      "image": "/airo-assets/images/sermons/sermon-1"
+    },
+    {
+      "id": "2",
+      "title": "The Word That Transforms",
+      "series": "Foundations",
+      "speaker": "Pastor Sarah Kimani",
+      "date": "Oct 12, 2026",
+      "scripture": "Hebrews 4:12",
+      "image": "/airo-assets/images/sermons/sermon-2"
+    },
+    {
+      "id": "3",
+      "title": "Praise Before the Breakthrough",
+      "series": "Worship & War",
+      "speaker": "Pastor James Okafor",
+      "date": "Oct 5, 2026",
+      "scripture": "2 Chronicles 20:21",
+      "image": "/airo-assets/images/sermons/sermon-3"
+    }
+  ],
+  "galleryImages": [
+    {
+      "slot": "/airo-assets/images/gallery/slide-1",
+      "alt": "Worship service",
+      "tall": true,
+      "id": "iL7Ct4y7hGVX586NdB7Px"
+    },
+    {
+      "slot": "/airo-assets/images/gallery/slide-2",
+      "alt": "Community gathering",
+      "tall": false,
+      "id": "an5IdjRGhVSawhpaoWu8f"
+    },
+    {
+      "slot": "/airo-assets/images/gallery/slide-3",
+      "alt": "Baptism ceremony",
+      "tall": false,
+      "id": "HLZCpBKZ3FWVPcIHJM6gj"
+    },
+    {
+      "slot": "/airo-assets/images/gallery/slide-4",
+      "alt": "Choir performance",
+      "tall": false,
+      "id": "5XpP1TZiWtAqmrbaxKr59"
+    },
+    {
+      "slot": "/airo-assets/images/gallery/slide-5",
+      "alt": "Community outreach",
+      "tall": false,
+      "id": "0bojI4ijjFNlWH2KjONOr"
+    },
+    {
+      "slot": "/airo-assets/images/gallery/slide-6",
+      "alt": "Wedding ceremony",
+      "tall": true,
+      "id": "dybBWewWCVo24dEhIAGtW"
+    }
+  ]
+}
