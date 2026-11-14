@@ -224,9 +224,11 @@ function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onCo
 }
 
 /* ── API helpers ── */
+const ADMIN_REQUEST_TIMEOUT_MS = 25_000;
+
 async function api<T = Record<string, unknown>>(method: string, path: string, body?: unknown): Promise<T> {
   const controller = new window.AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 15_000);
+  const timeout = window.setTimeout(() => controller.abort(), ADMIN_REQUEST_TIMEOUT_MS);
   try {
     const res = await window.fetch(path, {
       method,
@@ -351,7 +353,7 @@ export default function AdminPage() {
   useEffect(() => {
     const controller = new window.AbortController();
     let active = true;
-    const timeout = window.setTimeout(() => controller.abort(), 12_000);
+    const timeout = window.setTimeout(() => controller.abort(), ADMIN_REQUEST_TIMEOUT_MS);
 
     const checkSession = async () => {
       try {
@@ -400,7 +402,7 @@ export default function AdminPage() {
     let active = true;
     setDashboardLoading(true);
     setDashboardError('');
-    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+    const timeout = window.setTimeout(() => controller.abort(), ADMIN_REQUEST_TIMEOUT_MS);
 
     const loadDashboard = async () => {
       try {
@@ -472,7 +474,7 @@ export default function AdminPage() {
     const controller = new window.AbortController();
     let active = true;
     setContactsLoading(true);
-    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+    const timeout = window.setTimeout(() => controller.abort(), ADMIN_REQUEST_TIMEOUT_MS);
     window.fetch('/api/admin/church-contacts', { signal: controller.signal, cache: 'no-store' })
       .then(async response => {
         const data: unknown = await response.json();

@@ -51,6 +51,7 @@ Configure these values in local `.env` and in the hosting provider's environment
 | `RESEND_FROM_EMAIL` | Server only | Verified sender address for outgoing email |
 | `VITE_SUPABASE_URL` | Browser-visible | Supabase URL used for signed media uploads |
 | `VITE_SUPABASE_ANON_KEY` | Browser-visible | Public Supabase key; configure strict database and Storage policies |
+| `VITE_PUBLIC_URL` | Browser-visible | Canonical public website origin, for example `https://example.org` |
 | `VITE_GOOGLE_ANALYTICS_ID` | Browser-visible | Optional Google Analytics measurement ID; analytics loads only after consent |
 
 The Supabase anon key and Google Analytics ID are public identifiers, not secrets. Never expose the service-role key, database password, email API key, or session secret in client code or browser environment variables.
@@ -91,16 +92,53 @@ The `/privacy` page describes the website's contact forms and cookies. Google An
 
 The server generates host-specific `/robots.txt` and `/sitemap.xml` responses. Admin routes are excluded from the sitemap. Public pages should keep their page title, description, canonical URL, and structured data aligned with the actual content.
 
-## Deployment and rollback
+## Deploying to Vercel
 
-The repository includes Vercel configuration. Use preview deployments as a blue/green validation stage:
+The repository includes a Vercel Express function configuration (`vercel.json`). In the Vercel project:
 
-1. Apply backward-compatible, additive database migrations.
-2. Deploy the candidate to a Vercel preview and verify public pages, admin login, contact forms, uploads, and SEO endpoints.
+1. Set the **Root Directory** to the repository root, where `package.json` and `vercel.json` live. Use `npm run build` as the build command; the repository config includes the generated client and SSR bundle in the function.
+2. Set the Node.js version to **22.x**. The `package.json` engine range starts at Node 22.22 and currently permits future major versions; pinning the deployed major avoids an untested automatic upgrade.
+3. Add environment variables in **Project Settings → Environment Variables** for each target you deploy to (Production, Preview, and Development as needed). Variables are project-specific; another Vercel project using the same Supabase database does not share its settings.
+4. Apply all SQL migrations to the Supabase project referenced by `SUPABASE_DB_URL`, then deploy. Changes to Vercel environment variables take effect only in a new deployment. Redeploy after changing them; `VITE_` variables are embedded in the browser build.
+5. Test the deployment's public pages, `/api/health`, `/admin`, admin login, contact forms, uploads, `/robots.txt`, and `/sitemap.xml`. Promote a validated Preview deployment rather than testing only on Production.
+
+### Supabase and admin-login timeouts
+
+The admin login and session APIs query Postgres directly through **`SUPABASE_DB_URL`**. Setting only `SUPABASE_URL`, `VITE_SUPABASE_URL`, or Supabase API keys is not enough to connect the admin portal to its database. Confirm that the `SUPABASE_DB_URL` value in the *specific Vercel project and deployment environment* points to the intended Supabase project.
+
+For Vercel, use the PostgreSQL connection-pooler URI copied from the Supabase dashboard's **Connect** panel (transaction pooler is suitable here). Do not construct the host or username by hand. Keep the port, username, database, and SSL-compatible URI as Supabase provides them; URL-encode special characters in the database password. The code requires SSL and uses a 20-second database connect timeout on Vercel.
+
+Use this sequence to diagnose a timeout:
+
+1. Open `/api/health` on the deployed host. A `200` means the app function responds; this endpoint does **not** check database connectivity.
+2. In browser developer tools, inspect the `/api/admin/me` and `/api/admin/login` requests for their status and elapsed time. The admin browser waits up to 25 seconds for a database-backed request; a timeout there is not proof that the password is wrong.
+3. In **Vercel → Project → Deployments → Function Logs**, inspect the request at the same timestamp. Look for a missing `SUPABASE_DB_URL`, database DNS/connect timeout, password authentication failure, or a missing-table/migration error. Never paste connection strings, passwords, service-role keys, or session secrets into logs, tickets, or chat.
+4. Verify the deployment has the needed variables in the correct Vercel environment, the database is active, the pooler URI belongs to the intended Supabase project, and all migrations have been applied to that database. After correcting a variable, redeploy and test that deployment again.
+
+The install output can contain warnings that are unrelated to Supabase: the broad Node engine range, deprecated-package notices, or unknown npm configuration keys do not by themselves indicate a failed build or database connection. The `install-scripts` warning does require checking the remainder of the build log: if a later error says an install script was skipped or an esbuild binary is unavailable, address that specific build error. The log excerpt ending during dependency installation is not enough to determine whether the build succeeded; check for Vercel's final build/deployment status.
+
+### Deploying on other Node.js platforms
+
+This application needs a **Node.js server** for its Express APIs and SSR; a static-only host is not sufficient. For a platform that supports a persistent Node web service (for example, Render, Railway, or a VPS), configure:
+
+| Setting | Value |
+|---|---|
+| Node.js | 22.x (22.22 or later) |
+| Install command | `npm ci` |
+| Build command | `npm run build` |
+| Start command | `node dist/server.bundle.mjs` |
+| Health check | `/api/health` |
+
+Set the same server-side and browser build variables described above in that platform's environment settings. Let the host provide `PORT` (the server also defaults to `3000`) and set `NODE_ENV=production`. Ensure the built `dist/client` directory is retained alongside `dist/server.bundle.mjs`. Do not set Vercel-specific variables on another host. Before switching platforms, confirm it supports the app's required Node version, outbound TLS Postgres connections to the Supabase pooler, long-running Node processes, and your desired deployment region.
+
+### Rollback
+
+1. Apply backward-compatible, additive database migrations before deploying code that uses them.
+2. Validate the candidate deployment, including admin login, contact forms, uploads, and SEO endpoints.
 3. Promote the verified deployment to production.
-4. If validation fails, restore the previous deployment and then address the issue before promoting another candidate.
+4. If validation fails, restore the previous deployment and investigate the function logs before promoting another candidate.
 
-Database changes should remain compatible with both the current and previous application deployment during a rollback window. No deployment is fully tested until its production environment variables, Supabase policies, and DNS configuration have been verified.
+Keep database changes compatible with both the current and previous application deployment during a rollback window. No deployment is fully tested until its environment variables, Supabase policies, and DNS configuration have been verified.
 
 ## Project layout
 
