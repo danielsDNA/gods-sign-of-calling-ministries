@@ -56,6 +56,7 @@ export async function loadAdminBootstrap(role: string, permissions: AdminPermiss
       ].includes(setting.key))
       || (can('site-info') && editorsCanManageGiveDetails && [
         'give_mtn_number', 'give_mtn_name', 'give_airtel_number', 'give_airtel_name',
+        'give_mtn_code', 'give_airtel_code',
         'give_bank_name', 'give_bank_account_name', 'give_bank_account_number', 'give_bank_branch',
       ].includes(setting.key))
       || (can('site-info') && [

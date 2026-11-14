@@ -36,7 +36,7 @@ export async function requireAdmin(
   req: Request,
   res: Response,
   permissionOverride?: AdminPermission,
-): Promise<{ id: number; email: string; role: string; permissions: AdminPermission[] } | null> {
+): Promise<{ id: number; email: string; displayName: string | null; role: string; permissions: AdminPermission[] } | null> {
   const token = req.cookies?.admin_session;
   if (typeof token !== 'string') {
     res.status(401).json({ error: 'Not authenticated' });
@@ -54,6 +54,7 @@ export async function requireAdmin(
   const [user] = await db.select({
     id: adminUsers.id,
     email: adminUsers.email,
+    displayName: adminUsers.displayName,
     role: adminUsers.role,
     permissions: adminUsers.permissions,
     passwordHash: adminUsers.passwordHash,
@@ -85,5 +86,5 @@ export async function requireAdmin(
     res.status(403).json({ error: 'You do not have permission to perform this task' });
     return null;
   }
-  return { id: user.id, email: user.email ?? '', role, permissions };
+  return { id: user.id, email: user.email ?? '', displayName: user.displayName, role, permissions };
 }

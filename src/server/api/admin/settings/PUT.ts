@@ -21,8 +21,10 @@ const editorSettingKeys = new Set([
 ]);
 
 const giveDetailKeys = new Set([
+  'give_mtn_code',
   'give_mtn_number',
   'give_mtn_name',
+  'give_airtel_code',
   'give_airtel_number',
   'give_airtel_name',
   'give_bank_name',
@@ -36,6 +38,8 @@ const giveDetailKeys = new Set([
 
 const ownerOnlyGiveKeys = new Set([
   'give_enabled',
+  'give_popup_enabled',
+  'event_popup_enabled',
   'give_editor_details_enabled',
   'give_mtn_enabled',
   'give_airtel_enabled',
@@ -108,6 +112,6 @@ export default async function handler(req: Request, res: Response) {
     res.json({ ok: true });
   } catch (err) {
     console.error('Unable to save site settings:', err instanceof Error ? err.message : 'Unknown error');
-    res.status(500).json({ error: 'Failed to save settings', message: String(err) });
+    res.status(500).json({ error: 'Failed to save settings' });
   }
 }

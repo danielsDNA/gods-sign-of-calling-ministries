@@ -8,6 +8,7 @@ import CookieBannerSlot from './components/CookieBannerSlot';
 import RootLayout from './layouts/RootLayout';
 import Spinner from './components/Spinner';
 import { routes } from './routes';
+import { Analytics } from '@vercel/analytics/react';
 
 const SpinnerFallback = () => (
   <div className="flex justify-center py-8 h-screen items-center">
@@ -62,6 +63,7 @@ export default function App() {
     <>
       <AiroRouterProvider router={router} />
       <CookieBannerSlot />
+      <Analytics />
     </>
   );
 }

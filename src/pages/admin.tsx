@@ -216,7 +216,7 @@ function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onCo
         <p>{message}</p>
         <div className="admin-confirm__actions">
           <button className="admin-btn admin-btn--ghost" onClick={onCancel}>Cancel</button>
-          <button className="admin-btn admin-btn--danger" onClick={onConfirm}>Delete</button>
+          <button className="admin-btn admin-btn--danger" onClick={onConfirm}>Move to Trash</button>
         </div>
       </div>
     </div>
@@ -259,6 +259,7 @@ export default function AdminPage() {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [saving, setSaving] = useState(false);
   const [adminEmail, setAdminEmail] = useState('');
+  const [adminDisplayName, setAdminDisplayName] = useState('');
   const [adminRole, setAdminRole] = useState('editor');
   const [adminPermissions, setAdminPermissions] = useState<AdminPermission[]>([]);
 
@@ -329,6 +330,7 @@ export default function AdminPage() {
   }, []);
 
   const applyAdminBootstrap = useCallback((data: AdminBootstrapResponse) => {
+    setAdminDisplayName(data.user.displayName || '');
     setAdminRole(data.user.role || 'editor');
     setAdminPermissions(data.user.permissions || []);
     setSettings(data.settings || {});
@@ -360,6 +362,7 @@ export default function AdminPage() {
         const response = await window.fetch('/api/admin/me', { signal: controller.signal });
         const data = await response.json().catch(() => ({})) as {
           email?: string;
+          displayName?: string | null;
           role?: string;
           permissions?: AdminPermission[];
           error?: string;
@@ -372,6 +375,7 @@ export default function AdminPage() {
         if (!response.ok) throw new Error(data.error || 'Unable to verify the admin session.');
         if (!data.email) throw new Error('The server returned an invalid admin session.');
         setAdminEmail(data.email);
+        setAdminDisplayName(data.displayName || '');
         setAdminRole(data.role || 'editor');
         setAdminPermissions(data.permissions || []);
         setAuthed(true);
@@ -532,6 +536,7 @@ export default function AdminPage() {
       const d = await api<{ user: AdminBootstrapResponse['user'] }>('POST', '/api/admin/login', { email: loginEmail, password: loginPassword });
       setAuthed(true);
       setAdminEmail(d.user.email || loginEmail);
+      setAdminDisplayName(d.user.displayName || '');
       setAdminRole(d.user.role || 'editor');
       setAdminPermissions(d.user.permissions || []);
     } catch (err: unknown) {
@@ -567,6 +572,8 @@ export default function AdminPage() {
   const handleLogout = async () => {
     await api('POST', '/api/admin/logout', {}).catch(() => {});
     setAuthed(false);
+    setAdminEmail('');
+    setAdminDisplayName('');
   };
 
   /* ── Settings save ── */
@@ -580,7 +587,7 @@ export default function AdminPage() {
         'logo_url', 'about_image_url',
       ]);
       const giveDetailKeys = new Set([
-        'give_mtn_number', 'give_mtn_name', 'give_airtel_number', 'give_airtel_name',
+        'give_mtn_code', 'give_mtn_number', 'give_mtn_name', 'give_airtel_code', 'give_airtel_number', 'give_airtel_name',
         'give_bank_name', 'give_bank_account_name', 'give_bank_account_number', 'give_bank_branch',
         'give_campaign_title', 'give_reason', 'give_image_url',
       ]);
@@ -715,7 +722,9 @@ export default function AdminPage() {
       if (type === 'ministries') setMinistries(prev => prev.filter(m => m.id !== id));
       if (type === 'leadership') setLeaders(prev => prev.filter(l => l.id !== id));
       if (type === 'gallery') setGallery(prev => prev.filter(g => g.id !== id));
-      toast('success', 'Deleted');
+      if (type === 'contact-requests') setContactRequests(prev => prev.filter(request => request.id !== id));
+      if (type === 'prayer') setPrayers(prev => prev.filter(request => request.id !== id));
+      toast('success', 'Moved to Trash. A Super Admin can restore it later.');
     } catch (error: unknown) { toast('error', error instanceof Error ? error.message : 'Unable to delete item'); }
   };
 
@@ -801,6 +810,17 @@ export default function AdminPage() {
       setPrayers(prev => prev.map(p => p.id === id ? { ...p, status, adminNote } : p));
       toast('success', 'Updated');
     } catch (error: unknown) { toast('error', error instanceof Error ? error.message : 'Unable to update request'); }
+  };
+
+  const sendPrayerReply = async (id: number, reply: string): Promise<boolean> => {
+    try {
+      await api('PUT', `/api/admin/prayer/${id}`, { reply });
+      toast('success', 'Prayer response email sent');
+      return true;
+    } catch (error: unknown) {
+      toast('error', error instanceof Error ? error.message : 'Unable to send prayer response');
+      return false;
+    }
   };
 
   const updateContactRequestStatus = async (id: number, status: ContactRequest['status']) => {
@@ -1066,16 +1086,16 @@ export default function AdminPage() {
       </div>
 
       {/* Confirm dialog */}
-      {confirmDelete && <ConfirmDialog message="Are you sure you want to delete this item? This cannot be undone." onConfirm={doDelete} onCancel={() => setConfirmDelete(null)} />}
+      {confirmDelete && <ConfirmDialog message="Move this item to Trash? A Super Admin can restore it later." onConfirm={doDelete} onCancel={() => setConfirmDelete(null)} />}
 
       <div className="admin-shell">
         {/* Sidebar */}
         <aside className="admin-sidebar">
           <div className="admin-sidebar__brand">
-            <div className="admin-logo-box admin-logo-box--sm"><Church size={18} color="white" /></div>
+            <img className="admin-sidebar__logo" src={settings.logo_url || '/community.png'} alt="" />
             <div>
               <div className="admin-sidebar__name">{settings.church_name || 'Church'}</div>
-              <div className="admin-sidebar__role">{adminRole === 'owner' ? 'Super Admin' : 'Editor'}</div>
+              <div className="admin-sidebar__role">{adminDisplayName || (adminRole === 'owner' ? 'Super Admin' : 'Editor')}</div>
             </div>
           </div>
           <nav className="admin-sidebar__nav">
@@ -1087,6 +1107,7 @@ export default function AdminPage() {
             ))}
           </nav>
           <div className="admin-sidebar__footer">
+            <div className="admin-sidebar__user">{adminDisplayName || (adminRole === 'owner' ? 'Super Admin' : 'Editor')}</div>
             <div className="admin-sidebar__email">{adminEmail}</div>
             <button className="admin-btn admin-btn--ghost admin-btn--sm" onClick={handleLogout}><LogOut size={14} /> Sign out</button>
           </div>
@@ -1294,6 +1315,20 @@ export default function AdminPage() {
                 <h2 className="admin-section__title">Events</h2>
                 <button className="admin-btn admin-btn--primary" onClick={() => setEditEvent({ category: eventCategories[0] || 'Event', published: true, featured: false })}><Plus size={16} /> Add event</button>
               </div>
+              {adminRole === 'owner' && (
+                <div className="admin-card">
+                  <label className="admin-check">
+                    <input
+                      name="event_popup_enabled"
+                      type="checkbox"
+                      checked={settings.event_popup_enabled === 'true'}
+                      onChange={event => void saveSettings({ event_popup_enabled: String(event.target.checked) })}
+                    />
+                    Show the next upcoming event popup once to each first-time visitor
+                  </label>
+                  <p className="admin-form__hint">Only published future events are shown. Visitors see each event announcement once per browser.</p>
+                </div>
+              )}
               {editEvent && (
                 <div className="admin-card admin-form-card">
                   <h3>{editEvent.id ? 'Edit Event' : 'New Event'}</h3>
@@ -1421,6 +1456,16 @@ export default function AdminPage() {
                         <option value="read">Read</option>
                       </select>
                     </label>
+                    {adminRole === 'owner' && (
+                      <button
+                        type="button"
+                        className="admin-btn admin-btn--danger-ghost admin-btn--sm"
+                        aria-label={`Move contact request from ${request.name} to Trash`}
+                        onClick={() => setConfirmDelete({ type: 'contact-requests', id: request.id })}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    )}
                   </div>
                 ))}
                 {contactRequests.length === 0 && <p className="admin-empty">No contact messages yet.</p>}
@@ -1428,7 +1473,14 @@ export default function AdminPage() {
               <h3 className="admin-section__subtitle" style={{ marginTop: '28px' }}>Prayer requests</h3>
               <div className="admin-list">
                 {prayers.map(p => (
-                  <PrayerCard key={p.id} prayer={p} onUpdate={updatePrayerStatus} />
+                  <PrayerCard
+                    key={p.id}
+                    prayer={p}
+                    onUpdate={updatePrayerStatus}
+                    onReply={sendPrayerReply}
+                    onDelete={id => setConfirmDelete({ type: 'prayer', id })}
+                    isOwner={adminRole === 'owner'}
+                  />
                 ))}
                 {prayers.length === 0 && <p className="admin-empty">No prayer requests yet.</p>}
               </div>
@@ -2186,10 +2238,18 @@ function BulkMediaUploader({ onToast }: { onToast: (type: 'success' | 'error', m
 }
 
 /* ── Prayer card sub-component ── */
-function PrayerCard({ prayer, onUpdate }: { prayer: PrayerRequest; onUpdate: (id: number, status: string, note: string) => void }) {
+function PrayerCard({ prayer, onUpdate, onReply, onDelete, isOwner }: {
+  prayer: PrayerRequest;
+  onUpdate: (id: number, status: string, note: string) => void;
+  onReply: (id: number, reply: string) => Promise<boolean>;
+  onDelete: (id: number) => void;
+  isOwner: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(prayer.status);
   const [note, setNote] = useState(prayer.adminNote || '');
+  const [reply, setReply] = useState('');
+  const [replying, setReplying] = useState(false);
   return (
     <div className="admin-list-item admin-list-item--prayer">
       <div className="admin-list-item__body" style={{ flex: 1 }}>
@@ -2215,10 +2275,43 @@ function PrayerCard({ prayer, onUpdate }: { prayer: PrayerRequest; onUpdate: (id
               <textarea name={`prayer-note-${prayer.id}`} aria-label={`Internal note for prayer request from ${prayer.name || 'anonymous'}`} value={note} onChange={e => setNote(e.target.value)} rows={2} placeholder="Internal note…" />
             </div>
             <button className="admin-btn admin-btn--primary admin-btn--sm" onClick={() => { onUpdate(prayer.id, status, note); setOpen(false); }}><Save size={14} /> Save</button>
+            <div className="admin-field">
+              <label htmlFor={`prayer-reply-${prayer.id}`}>Reply by email</label>
+              <textarea
+                id={`prayer-reply-${prayer.id}`}
+                name={`prayer-reply-${prayer.id}`}
+                value={reply}
+                onChange={event => setReply(event.target.value)}
+                rows={3}
+                maxLength={5000}
+                disabled={!prayer.email || replying}
+                placeholder={prayer.email ? 'Write a private response…' : 'No email address was provided for this request.'}
+              />
+              <button
+                type="button"
+                className="admin-btn admin-btn--primary admin-btn--sm"
+                disabled={!prayer.email || !reply.trim() || replying}
+                onClick={() => {
+                  setReplying(true);
+                  void onReply(prayer.id, reply.trim()).then(sent => {
+                    if (sent) setReply('');
+                  }).finally(() => setReplying(false));
+                }}
+              >
+                {replying ? <><Loader2 size={14} className="admin-spin" /> Sending…</> : 'Send email reply'}
+              </button>
+            </div>
           </div>
         )}
       </div>
-      <button className="admin-btn admin-btn--ghost admin-btn--sm" onClick={() => setOpen(o => !o)}>{open ? <ChevronUp size={14} /> : <ChevronDown size={14} />} {open ? 'Close' : 'Respond'}</button>
+      <div className="admin-list-item__actions">
+        <button className="admin-btn admin-btn--ghost admin-btn--sm" onClick={() => setOpen(o => !o)}>{open ? <ChevronUp size={14} /> : <ChevronDown size={14} />} {open ? 'Close' : 'Respond'}</button>
+        {isOwner && (
+          <button className="admin-btn admin-btn--danger-ghost admin-btn--sm" aria-label={`Move prayer request from ${prayer.name || 'anonymous'} to Trash`} onClick={() => onDelete(prayer.id)}>
+            <Trash2 size={14} />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -2385,6 +2478,10 @@ function GivingTab({ settings, onSave, onToast, saving, role, canUploadMedia }: 
               Show the Give button in the website navigation
             </label>
             <label className="admin-check admin-field--full">
+              <input name="give_popup_enabled" type="checkbox" checked={f('give_popup_enabled') === 'true'} onChange={event => set('give_popup_enabled', String(event.target.checked))} />
+              Show this fundraiser once to each first-time visitor
+            </label>
+            <label className="admin-check admin-field--full">
               <input name="give_editor_details_enabled" type="checkbox" checked={f('give_editor_details_enabled') === 'true'} onChange={event => set('give_editor_details_enabled', String(event.target.checked))} />
               Allow admins with Site Info permission to edit fundraising details and payment account information
             </label>
@@ -2410,12 +2507,14 @@ function GivingTab({ settings, onSave, onToast, saving, role, canUploadMedia }: 
         <h3>Payment methods</h3>
         <div className="admin-form-grid">
           {(isOwner || settings.give_mtn_enabled === 'true') && <>
+            <div className="admin-field"><label htmlFor="give-mtn-code">MTN merchant / MoMo code</label><input id="give-mtn-code" name="give_mtn_code" value={f('give_mtn_code')} onChange={event => set('give_mtn_code', event.target.value)} /></div>
             <div className="admin-field"><label htmlFor="give-mtn-number">MTN Mobile Money number</label><input id="give-mtn-number" name="give_mtn_number" value={f('give_mtn_number')} onChange={event => set('give_mtn_number', event.target.value)} /></div>
-            <div className="admin-field"><label htmlFor="give-mtn-name">MTN account name</label><input id="give-mtn-name" name="give_mtn_name" value={f('give_mtn_name')} onChange={event => set('give_mtn_name', event.target.value)} /></div>
+            <div className="admin-field"><label htmlFor="give-mtn-name">MTN registered name</label><input id="give-mtn-name" name="give_mtn_name" value={f('give_mtn_name')} onChange={event => set('give_mtn_name', event.target.value)} /></div>
           </>}
           {(isOwner || settings.give_airtel_enabled === 'true') && <>
+            <div className="admin-field"><label htmlFor="give-airtel-code">Airtel merchant / MoMo code</label><input id="give-airtel-code" name="give_airtel_code" value={f('give_airtel_code')} onChange={event => set('give_airtel_code', event.target.value)} /></div>
             <div className="admin-field"><label htmlFor="give-airtel-number">Airtel Money number</label><input id="give-airtel-number" name="give_airtel_number" value={f('give_airtel_number')} onChange={event => set('give_airtel_number', event.target.value)} /></div>
-            <div className="admin-field"><label htmlFor="give-airtel-name">Airtel account name</label><input id="give-airtel-name" name="give_airtel_name" value={f('give_airtel_name')} onChange={event => set('give_airtel_name', event.target.value)} /></div>
+            <div className="admin-field"><label htmlFor="give-airtel-name">Airtel registered name</label><input id="give-airtel-name" name="give_airtel_name" value={f('give_airtel_name')} onChange={event => set('give_airtel_name', event.target.value)} /></div>
           </>}
           {(isOwner || settings.give_bank_enabled === 'true') && <>
             <div className="admin-field"><label htmlFor="give-bank-name">Bank name</label><input id="give-bank-name" name="give_bank_name" value={f('give_bank_name')} onChange={event => set('give_bank_name', event.target.value)} /></div>

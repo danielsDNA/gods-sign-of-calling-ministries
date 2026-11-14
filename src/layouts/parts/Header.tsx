@@ -8,11 +8,20 @@
  * - Amber underline hover effect on nav links
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Heart } from 'lucide-react';
+import { Landmark, Menu, X, Heart } from 'lucide-react';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
+
+interface PublicEvent {
+  id: number;
+  title: string;
+  description: string | null;
+  startsAt: string;
+  location: string | null;
+  imageUrl: string | null;
+}
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -28,27 +37,36 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showGiveDialog, setShowGiveDialog] = useState(false);
+  const [showEventDialog, setShowEventDialog] = useState(false);
+  const [awarenessEvent, setAwarenessEvent] = useState<PublicEvent | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const awarenessHandled = useRef(false);
   const location = useLocation();
-  const { settings } = useSiteSettings();
+  const { settings, loaded } = useSiteSettings();
   const isLive = settings.is_live === 'true';
   const paymentMethods = [
     {
+      id: 'mtn',
       enabled: settings.give_mtn_enabled === 'true',
       title: 'MTN Mobile Money',
       details: [
-        ['Number', settings.give_mtn_number],
-        ['Account name', settings.give_mtn_name],
+        ['Merchant / MoMo code', settings.give_mtn_code],
+        ['Mobile number', settings.give_mtn_number],
+        ['Registered name', settings.give_mtn_name],
       ].filter((entry): entry is [string, string] => Boolean(entry[1])),
     },
     {
+      id: 'airtel',
       enabled: settings.give_airtel_enabled === 'true',
       title: 'Airtel Money',
       details: [
-        ['Number', settings.give_airtel_number],
-        ['Account name', settings.give_airtel_name],
+        ['Merchant / MoMo code', settings.give_airtel_code],
+        ['Mobile number', settings.give_airtel_number],
+        ['Registered name', settings.give_airtel_name],
       ].filter((entry): entry is [string, string] => Boolean(entry[1])),
     },
     {
+      id: 'bank',
       enabled: settings.give_bank_enabled === 'true',
       title: 'Bank transfer',
       details: [
@@ -59,6 +77,64 @@ export default function Header() {
       ].filter((entry): entry is [string, string] => Boolean(entry[1])),
     },
   ].filter(method => method.enabled && method.details.length > 0);
+
+  useEffect(() => {
+    if (!loaded || awarenessHandled.current) return;
+    awarenessHandled.current = true;
+
+    const showGivingAwareness = () => {
+      if (settings.give_enabled !== 'true' || settings.give_popup_enabled !== 'true') return;
+      const storageKey = 'gsc-give-awareness';
+      if (window.localStorage.getItem(storageKey)) return;
+      window.localStorage.setItem(storageKey, 'shown');
+      setSelectedPaymentMethod(
+        settings.give_mtn_enabled === 'true' ? 'mtn'
+          : settings.give_airtel_enabled === 'true' ? 'airtel'
+            : settings.give_bank_enabled === 'true' ? 'bank' : '',
+      );
+      window.setTimeout(() => setShowGiveDialog(true), 1200);
+    };
+
+    if (settings.event_popup_enabled !== 'true') {
+      showGivingAwareness();
+      return;
+    }
+
+    void window.fetch('/api/events', { cache: 'no-store' })
+      .then(async response => {
+        if (!response.ok) throw new Error(`Unable to load event announcement (${response.status})`);
+        const events = await response.json() as PublicEvent[];
+        const now = Date.now();
+        const nextEvent = events
+          .filter(event => new Date(event.startsAt).getTime() > now)
+          .sort((left, right) => new Date(left.startsAt).getTime() - new Date(right.startsAt).getTime())[0];
+        if (!nextEvent) {
+          showGivingAwareness();
+          return;
+        }
+
+        const storageKey = `gsc-event-awareness-${nextEvent.id}`;
+        if (window.localStorage.getItem(storageKey)) {
+          showGivingAwareness();
+          return;
+        }
+        window.localStorage.setItem(storageKey, 'shown');
+        setAwarenessEvent(nextEvent);
+        window.setTimeout(() => setShowEventDialog(true), 1200);
+      })
+      .catch(error => {
+        console.error('Unable to prepare the first-visit event announcement:', error);
+        showGivingAwareness();
+      });
+  }, [
+    loaded,
+    settings.event_popup_enabled,
+    settings.give_airtel_enabled,
+    settings.give_bank_enabled,
+    settings.give_enabled,
+    settings.give_mtn_enabled,
+    settings.give_popup_enabled,
+  ]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -99,24 +175,19 @@ export default function Header() {
             {/* Logo */}
             <Link to="/" className="brand-logo-plaque flex items-center shrink-0 min-w-0">
               {settings.logo_url ? (
-                <>
-                  <img
-                    src={settings.logo_url}
-                    alt={`${settings.church_name || "God's Sign of Calling Revival Ministries"} logo`}
-                    className="block h-auto max-h-10 w-auto max-w-[140px] object-contain self-center"
-                  />
-                </>
+                <img
+                  src={settings.logo_url}
+                  alt={`${settings.church_name || "God's Sign of Calling Revival Ministries"} logo`}
+                  className="block h-auto max-h-10 w-auto max-w-[140px] object-contain self-center"
+                />
               ) : (
-                <span className="flex items-center gap-2 text-[#163832]">
-                  <span className="brand-mark" aria-hidden="true">
-                    <span />
-                    <span />
+                <>
+                  <img src="/community.png" alt="" className="block h-9 w-10 object-contain" />
+                  <span className="hidden max-w-[9rem] flex-col leading-tight text-white sm:flex" style={{ fontFamily: 'var(--font-hero)' }}>
+                    <span className="text-[9px] font-bold uppercase tracking-[0.08em]">God&apos;s Sign of Calling</span>
+                    <span className="text-xs font-semibold">Revival Ministries</span>
                   </span>
-                  <span className="flex flex-col leading-tight" style={{ fontFamily: 'var(--font-hero)' }}>
-                    <span className="text-[8px] font-bold uppercase tracking-[0.12em]">God&apos;s Sign of Calling</span>
-                    <span className="text-xs font-extrabold">Revival Ministries</span>
-                  </span>
-                </span>
+                </>
               )}
             </Link>
 
@@ -162,7 +233,10 @@ export default function Header() {
               {settings.give_enabled === 'true' && <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowGiveDialog(true)}
+                  onClick={() => {
+                    setSelectedPaymentMethod(paymentMethods[0]?.id || '');
+                    setShowGiveDialog(true);
+                  }}
                   className="px-5 py-2 rounded-lg text-sm font-semibold"
                   style={{
                     background: 'hsl(var(--primary-light))',
@@ -233,7 +307,11 @@ export default function Header() {
               {settings.give_enabled === 'true' && <div className="pt-2 pb-1 border-t mt-2 border-border">
                 <button
                   type="button"
-                  onClick={() => { setMobileOpen(false); setShowGiveDialog(true); }}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setSelectedPaymentMethod(paymentMethods[0]?.id || '');
+                    setShowGiveDialog(true);
+                  }}
                   className="w-full py-3 rounded-lg text-sm font-semibold"
                   style={{
                     background: 'hsl(var(--primary-light))',
@@ -272,32 +350,110 @@ export default function Header() {
               <button className="give-modal__close" type="button" aria-label="Close giving details" onClick={() => setShowGiveDialog(false)}>
                 <X size={20} />
               </button>
-              <div className="give-modal__icon"><Heart size={20} /></div>
-              <h2 id="give-modal-title">Give to {settings.church_name || 'the church'}</h2>
+              <h2 id="give-modal-title" className="sr-only">Give to {settings.church_name || 'the church'}</h2>
+              <div className="give-campaign-banner">
+                <img
+                  src={settings.logo_url || '/community.png'}
+                  alt=""
+                  className="give-campaign-banner__logo"
+                />
+                <div className="give-campaign-banner__title">
+                  <span>Fund</span>
+                  <span>Raising</span>
+                </div>
+                {settings.give_image_url && (
+                  <img
+                    src={settings.give_image_url}
+                    alt={settings.give_campaign_title || 'Fundraising campaign'}
+                    className="give-campaign-banner__image"
+                  />
+                )}
+              </div>
+              <p className="give-campaign-banner__church">{settings.church_name || 'God’s Sign of Calling Revival Ministries'}</p>
               {(settings.give_campaign_title || settings.give_reason || settings.give_image_url) && (
                 <div className="give-campaign">
                   {settings.give_campaign_title && <h3>{settings.give_campaign_title}</h3>}
-                  {settings.give_image_url && (
-                    <img src={settings.give_image_url} alt={settings.give_campaign_title || 'Church fundraising'} />
-                  )}
                   {settings.give_reason && <p>{settings.give_reason}</p>}
                 </div>
               )}
-              {paymentMethods.length > 0 ? paymentMethods.map(method => (
-                <section key={method.title} className="give-method">
-                  <h3>{method.title}</h3>
-                  <dl>
-                    {method.details.map(([label, value]) => (
-                      <div key={label}>
-                        <dt>{label}</dt>
-                        <dd>{value}</dd>
-                      </div>
+              {paymentMethods.length > 0 ? (
+                <div className="give-payment-panel">
+                  <div className="give-payment-panel__label">Select transaction method</div>
+                  <div className="give-payment-methods" role="group" aria-label="Transaction method">
+                    {paymentMethods.map(method => (
+                      <button
+                        key={method.id}
+                        type="button"
+                        className={`give-payment-choice ${selectedPaymentMethod === method.id ? 'is-selected' : ''}`}
+                        aria-pressed={selectedPaymentMethod === method.id}
+                        onClick={() => setSelectedPaymentMethod(method.id)}
+                      >
+                        {method.id === 'airtel' ? (
+                          <span className="give-brand-mark give-brand-mark--airtel" aria-hidden="true">airtel</span>
+                        ) : method.id === 'mtn' ? (
+                          <span className="give-brand-mark give-brand-mark--mtn" aria-hidden="true">MTN</span>
+                        ) : (
+                          <Landmark size={22} aria-hidden="true" />
+                        )}
+                        <span>{method.title}</span>
+                      </button>
                     ))}
-                  </dl>
-                </section>
-              )) : (
+                  </div>
+                  {paymentMethods.filter(method => method.id === selectedPaymentMethod).map(method => (
+                    <section key={method.id} className="give-method">
+                      <h3>{method.title} payment details</h3>
+                      <dl>
+                        {method.details.map(([label, value]) => (
+                          <div key={label}>
+                            <dt>{label}</dt>
+                            <dd>{value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  ))}
+                </div>
+              ) : (
                 <p className="give-modal__empty">Giving details are being prepared. Please contact the church for assistance.</p>
               )}
+            </motion.section>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showEventDialog && awarenessEvent && (
+          <motion.div
+            className="give-modal-overlay"
+            role="presentation"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onMouseDown={event => {
+              if (event.target === event.currentTarget) setShowEventDialog(false);
+            }}
+          >
+            <motion.section
+              className="give-modal event-awareness-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="event-awareness-title"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            >
+              <button className="give-modal__close" type="button" aria-label="Close event announcement" onClick={() => setShowEventDialog(false)}>
+                <X size={20} />
+              </button>
+              <p className="event-awareness-modal__eyebrow">Upcoming at {settings.church_name || 'our church'}</p>
+              <h2 id="event-awareness-title">{awarenessEvent.title}</h2>
+              {awarenessEvent.imageUrl && <img className="event-awareness-modal__image" src={awarenessEvent.imageUrl} alt="" />}
+              <p className="event-awareness-modal__date">{new Date(awarenessEvent.startsAt).toLocaleString()}</p>
+              {awarenessEvent.location && <p className="event-awareness-modal__location">{awarenessEvent.location}</p>}
+              {awarenessEvent.description && <p className="event-awareness-modal__description">{awarenessEvent.description.replace(/<[^>]*>/g, ' ')}</p>}
+              <Link className="admin-btn admin-btn--primary event-awareness-modal__link" to="/events" onClick={() => setShowEventDialog(false)}>
+                View all events
+              </Link>
             </motion.section>
           </motion.div>
         )}

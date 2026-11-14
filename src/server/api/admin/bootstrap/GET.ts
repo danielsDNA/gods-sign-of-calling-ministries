@@ -11,7 +11,12 @@ export default async function handler(req: Request, res: Response) {
     const content = await loadAdminBootstrap(user.role, user.permissions);
     res.setHeader('Cache-Control', 'private, no-store');
     res.json({
-      user: { email: user.email, role: user.role, permissions: user.permissions },
+      user: {
+        email: user.email,
+        displayName: user.displayName,
+        role: user.role,
+        permissions: user.permissions,
+      },
       ...content,
     });
   } catch (error) {

@@ -78,19 +78,62 @@ The Supabase anon key and Google Analytics ID are public identifiers, not secret
 
 The **Giving & Fundraising** section is separate from **Site Info**. The Super Admin controls whether the Give button appears, which payment methods are shown, and whether admins with Site Info permission may edit the fundraising purpose, optional picture, and payment details.
 
+MTN and Airtel giving options can show a merchant/MoMo code, mobile number, and registered name. Add only the exact payment details approved by the church. The owner can separately enable a one-time first-visit fundraiser popup in **Giving & Fundraising**, and an upcoming-event popup in **Events**. Each published upcoming event and fundraiser awareness message appears at most once per browser; the regular Give button/modal remains available when enabled.
+
 `npm run admin:create` reads `.env` and writes to the database selected by `SUPABASE_DB_URL`. Check that URL before running the command, especially if you intend to create a production account. Never point it at a production database by accident.
 
-Admin sessions use signed, `HttpOnly`, `SameSite=Strict` cookies (`Secure` in production). Password-reset codes are one-use and expire after 15 minutes. Login and reset endpoints have per-process request limits; deployments with multiple server instances should add a shared rate-limit store at the edge or use Redis so the limits apply across instances.
+Admin sessions use signed, `HttpOnly`, `SameSite=Strict` cookies (`Secure` in production). Password reset sends a one-use code that expires after 15 minutes. Configure `RESEND_API_KEY` and a verified `RESEND_FROM_EMAIL` to deliver reset codes and admin replies; see [Email delivery and admin responses](#email-delivery-and-admin-responses). Login and reset endpoints have per-process request limits; deployments with multiple server instances should add a shared rate-limit store at the edge or use Redis so the limits apply across instances.
+
+Admins and editors can review and respond to contact and prayer requests in **Requests**. Contact responses and prayer email replies are sent through Resend; prayer status and internal notes can also be updated. Only Super Admins can move requests to **Trash**. This is a soft-delete, so test submissions can be removed from the inbox and restored from the Super Admin Trash view.
 
 The upload API requires an authorized admin session and checks declared file type and size before issuing a short-lived signed upload URL. Keep Supabase Storage policies restrictive; a signed upload URL is a bearer credential and should not be logged or shared.
+
+## Email delivery and admin responses
+
+1. Create a Resend account and verify the sending domain used by the church. Complete the DNS records Resend requires before sending from that domain.
+2. Create an API key in Resend and set `RESEND_API_KEY` in the hosting project's server-side environment settings. Set `RESEND_FROM_EMAIL` to a sender address on the verified domain, such as `Church Website <website@example.org>`.
+3. Configure these values for each Vercel environment that needs email (Production, Preview, and Development), or in the matching environment manager on another host. Keep both values server-only; neither should have a `VITE_` prefix.
+4. Submit a test contact or prayer request using an address you control. Sign in at `/admin`, open **Requests**, write a reply, and choose **Send reply** or **Send email reply**. Check the recipient inbox and Resend delivery logs.
+
+If Resend is unset or rejects the email, the admin UI reports that the reply could not be sent; it does not mark the request as replied. Contact-form notification recipients can be set by the Super Admin in **Site Info → Contact notification email**. Password reset uses the same Resend configuration. Reset codes are one-use and valid for 15 minutes; the request endpoint is limited to 3 attempts per 15 minutes per server process. Sign-in is limited to 5 attempts per 15 minutes per server process. These in-memory limits are not shared across multiple instances.
 
 ## Privacy and analytics
 
 The `/privacy` page describes the website's contact forms and cookies. Google Analytics is loaded only after a visitor chooses **Accept cookies**. That choice enables analytics cookies; **Essential cookies only** leaves Google Analytics disabled. Set `VITE_GOOGLE_ANALYTICS_ID` in the hosting provider's environment settings to enable analytics; leave it unset to keep analytics disabled.
 
+### Google Analytics 4 setup
+
+1. In Google Analytics, create or select a GA4 property and add a **Web** data stream for the production website.
+2. Copy the measurement ID (`G-...`) into `VITE_GOOGLE_ANALYTICS_ID` for the Vercel **Production** environment (and Preview only if you intend to track preview traffic).
+3. Redeploy after changing the variable because `VITE_` values are compiled into the browser bundle.
+4. On the site, choose **Accept cookies** to enable Google Analytics, then confirm visits in the GA4 Realtime report. Choosing **Essential cookies only** keeps Google Analytics disabled.
+
+Vercel Web Analytics is an additional, separate service from Google Analytics. This is a Vite/React application, not Next.js, so use the React entry point rather than the `/next` import:
+
+```bash
+npm i @vercel/analytics
+```
+
+```tsx
+import { Analytics } from '@vercel/analytics/react';
+```
+
+Render `<Analytics />` once in the application root (as in `src/App.tsx`) and enable Web Analytics in the Vercel project dashboard. The Next.js-specific `@vercel/analytics/next` entry point is not appropriate for this app. Vercel Analytics does not replace the consent-controlled GA4 integration; disclose the analytics services in the privacy notice and check current provider requirements for your jurisdiction.
+
 ## Search indexing
 
-The server generates host-specific `/robots.txt` and `/sitemap.xml` responses. Admin routes are excluded from the sitemap. Public pages should keep their page title, description, canonical URL, and structured data aligned with the actual content.
+The server generates host-specific `/robots.txt` and `/sitemap.xml` responses. Admin routes are excluded from the sitemap. Set `VITE_PUBLIC_URL` to the canonical production origin and redeploy after changing it. Give every public page a distinct, descriptive title, meta description, one clear main heading, useful image alt text, and accurate internal links. Keep structured data consistent with visible page content; do not add private, draft, or admin URLs to the sitemap.
+
+### Submit the sitemap to Google Search Console
+
+1. Deploy the site on its final HTTPS domain and set `VITE_PUBLIC_URL` to that exact canonical origin, for example `https://example.org` (no trailing slash).
+2. Open `https://example.org/robots.txt` and verify it responds successfully and lists the sitemap. Open `https://example.org/sitemap.xml` and verify it returns valid XML with only public canonical pages.
+3. In [Google Search Console](https://search.google.com/search-console), add a **Domain** property for the domain (recommended) or a URL-prefix property for the exact HTTPS origin.
+4. For a Domain property, copy the TXT verification record Google gives you into the domain's DNS provider. Wait for DNS propagation, then click **Verify** in Search Console. Do not remove the TXT record after verification.
+5. In the verified property, open **Sitemaps**, enter `sitemap.xml`, and submit it. The sitemap URL should be under the verified canonical host.
+6. Check the sitemap submission status and the **Pages** report for fetch or indexing issues. Use **URL Inspection** on important public pages and request indexing after checking their canonical URL and rendered content.
+
+Sitemap submission helps Google discover URLs but does not guarantee that they will be indexed or rank at a particular position. Keep the sitemap current by publishing accurate content, fixing broken links, and avoiding duplicate or thin pages.
 
 ## Deploying to Vercel
 
