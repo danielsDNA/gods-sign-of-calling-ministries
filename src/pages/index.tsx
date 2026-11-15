@@ -399,12 +399,7 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <LoadingScreen
-        isLoading={isLoading}
-        logoUrl={siteSettings.logo_url}
-        churchName={siteSettings.church_name}
-        tagline={siteSettings.tagline}
-      />
+      <LoadingScreen isLoading={isLoading} />
 
       <main>
 
