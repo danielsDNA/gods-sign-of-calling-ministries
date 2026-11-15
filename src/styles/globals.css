@@ -468,6 +468,14 @@ html {
 .give-campaign { margin-bottom: 1rem; line-height: 1.6; }
 .give-campaign h3 { margin: 0 0 0.6rem; font-size: 1.05rem; font-weight: 700; }
 .give-campaign p { margin: 0; color: hsl(var(--muted-foreground)); white-space: pre-line; }
+.give-rich-text { color: hsl(var(--muted-foreground)); }
+.give-rich-text p { margin: 0 0 .55rem; }
+.give-rich-text ul, .give-rich-text ol { margin: .4rem 0 .6rem; padding-left: 1.4rem; }
+.give-rich-text ul { list-style: disc; }
+.give-rich-text ol { list-style: decimal; }
+.give-rich-text li + li { margin-top: .2rem; }
+.give-rich-text strong, .give-rich-text b { color: hsl(var(--foreground)); font-weight: 700; }
+.give-rich-text h2, .give-rich-text h3 { margin: .5rem 0; color: hsl(var(--foreground)); font-weight: 700; }
 .give-payment-panel { overflow: hidden; border-radius: 1rem; background: #fffbd4; }
 .give-payment-panel__label { padding: .4rem .7rem; background: #161616; color: #fff; text-align: center; font-size: .9rem; }
 .give-payment-methods { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; padding: .75rem; }
@@ -582,11 +590,9 @@ html {
 @keyframes heroCursorBlink { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
 
 .brand-logo-plaque {
-  border: 1px solid #b7e849;
-  border-radius: 0.9rem;
-  background: #fff;
-  padding: 0.4rem 0.75rem;
-  box-shadow: 0 4px 14px rgba(5, 31, 32, 0.14);
+  min-width: 0;
+  background: transparent;
+  padding: 0.15rem 0;
 }
 
 .brand-mark {

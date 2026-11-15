@@ -1,19 +1,22 @@
 import type { Request, Response } from 'express';
 import { db } from '../../db/supabase-client.js';
-import { siteSettings, heroPhrases } from '../../db/schema.js';
-import { eq } from 'drizzle-orm';
+import { siteSettings, heroPhrases, serviceTimes } from '../../db/schema.js';
+import { asc, eq } from 'drizzle-orm';
 import { requireAdmin } from '../admin/auth.js';
 
 export default async function handler(req: Request, res: Response) {
   const includePrivateSettings = req.query.all === 'true';
   if (includePrivateSettings && !await requireAdmin(req, res)) return;
   try {
-    const settings = await db.select().from(siteSettings);
-    const phrases = await db
-      .select()
-      .from(heroPhrases)
-      .where(eq(heroPhrases.active, true))
-      .orderBy(heroPhrases.sortOrder);
+    const [settings, phrases, times] = await Promise.all([
+      db.select().from(siteSettings),
+      db.select().from(heroPhrases)
+        .where(eq(heroPhrases.active, true))
+        .orderBy(asc(heroPhrases.sortOrder)),
+      db.select().from(serviceTimes)
+        .where(eq(serviceTimes.active, true))
+        .orderBy(asc(serviceTimes.sortOrder)),
+    ]);
 
     const map: Record<string, string> = {};
     for (const row of settings) {
@@ -21,8 +24,16 @@ export default async function handler(req: Request, res: Response) {
       map[row.key] = row.value ?? '';
     }
 
-    res.json({ settings: map, phrases: phrases.map((p) => p.phrase) });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to load settings', message: String(err) });
+    res.setHeader('Cache-Control', includePrivateSettings
+      ? 'private, no-store'
+      : 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
+    res.json({
+      settings: map,
+      phrases: phrases.map(phrase => phrase.phrase),
+      serviceTimes: times,
+    });
+  } catch (error) {
+    console.error('Unable to load public site settings:', error instanceof Error ? error.message : 'Unknown error');
+    res.status(500).json({ error: 'Unable to load site settings.' });
   }
 }

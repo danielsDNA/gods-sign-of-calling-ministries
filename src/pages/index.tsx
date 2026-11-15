@@ -40,15 +40,16 @@ import {
   Mail,
 } from 'lucide-react';
 
-import { useLoading } from '@/hooks/useLoading';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { useLoading } from '@/hooks/useLoading';
 import { useCmsList } from '@/hooks/useCmsList';
 import { usePageContent } from '@/hooks/usePageContent';
-import LoadingScreen from '@/components/LoadingScreen';
 import ScrollReveal from '@/components/ScrollReveal';
+import LoadingScreen from '@/components/LoadingScreen';
 import RichTextContent from '@/components/RichTextContent';
 import ChurchImpactStats from '@/components/ChurchImpactStats';
 import { churchImageUrl } from '@/lib/church-image-url';
+import { orderServicesByNextOccurrence } from '@/lib/service-time-order';
 import { useJsonLdSiteUrl } from '@/lib/json-ld-site-url-context';
 import { buildPageSeoUrls } from '@/lib/seo-url';
 
@@ -99,6 +100,10 @@ function getAnimatedGalleryIds(value: string | undefined, images: CmsGalleryImag
   }
 }
 
+function nonCommunityImage(value: string | undefined): string {
+  return value && !/(^|\/)community\.png(?:[?#]|$)/i.test(value) ? value : '';
+}
+
 const ministryIcons = [
   <Star key="ministry-star" size={20} />,
   <Heart key="ministry-heart" size={20} />,
@@ -142,8 +147,8 @@ function Typewriter({ phrases }: { phrases: string[] }) {
 
   return (
     <span
-      className="font-bold"
-      style={{ color: 'hsl(var(--primary))', fontFamily: 'var(--font-heading)' }}
+      className="font-bold italic"
+      style={{ color: 'hsl(var(--primary))', fontFamily: 'var(--font-script)' }}
     >
       {displayed}
       <span
@@ -263,7 +268,10 @@ export default function HomePage() {
   const [contactError, setContactError] = useState('');
   const [contactNotificationSent, setContactNotificationSent] = useState(false);
   const { isLoading } = useLoading(1800);
+  const [serviceIndex, setServiceIndex] = useState(0);
   const { settings: siteSettings, phrases, serviceTimes } = useSiteSettings();
+  const orderedServiceTimes = orderServicesByNextOccurrence(serviceTimes);
+  const featuredService = orderedServiceTimes[serviceIndex % Math.max(orderedServiceTimes.length, 1)];
   const seoUrls = buildPageSeoUrls(useJsonLdSiteUrl(), '/');
   const { content: ministryContent } = usePageContent('ministries', defaultMinistries);
   const { content: aboutContent } = usePageContent('about', defaultAbout);
@@ -297,21 +305,27 @@ export default function HomePage() {
       name: ministry.name,
       description: ministry.description,
       icon: ministryIcons[index % ministryIcons.length],
-      image: churchImageUrl(ministry.imageSlot),
+      image: ministry.name.toLowerCase().includes('community')
+        ? '/community.png'
+        : churchImageUrl(ministry.imageSlot),
     }))
     : cmsMinistries.map((ministry, index) => ({
       id: String(ministry.id),
       name: ministry.name,
       description: ministry.description || ministry.tagline || '',
       icon: ministryIcons[index % ministryIcons.length],
-      image: ministry.imageUrl || '/airo-assets/images/ministry/youth',
+      image: ministry.imageUrl || (ministry.name.toLowerCase().includes('community')
+        ? '/community.png'
+        : '/airo-assets/images/ministry/youth'),
     }));
   const galleryImages = cmsGallery.map(image => ({
       slot: churchImageUrl(image.imageUrl),
       alt: image.caption || "God's Sign of Calling Revival Ministries community",
       tall: false,
     }));
-  const aboutImage = siteSettings.about_image_url || siteSettings.about_bg_url || '/community.png';
+  const aboutImage = nonCommunityImage(siteSettings.about_image_url)
+    || nonCommunityImage(siteSettings.about_bg_url)
+    || '/airo-assets/images/pages/home/about-community';
   const animatedGalleryIds = new Set(getAnimatedGalleryIds(siteSettings.home_animated_gallery_ids, cmsGallery));
   const selectedGalleryImages = cmsGallery
     .filter(image => animatedGalleryIds.has(image.id))
@@ -324,11 +338,22 @@ export default function HomePage() {
     : [{ src: aboutImage, alt: `${siteSettings.church_name} community` }];
   const worshipSlides = aboutSlides;
 
+  useEffect(() => {
+    setServiceIndex(0);
+    if (orderedServiceTimes.length < 2) return;
+    const timer = window.setInterval(() => {
+      setServiceIndex(index => (index + 1) % orderedServiceTimes.length);
+    }, 6500);
+    return () => window.clearInterval(timer);
+  }, [orderedServiceTimes.length]);
+
   /* Subtle parallax on the hero photo */
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
-  const heroMedia = siteSettings.hero_photo_url || siteSettings.hero_bg_url || '/community.png';
+  const { scrollY } = useScroll();
+  const imageY = useTransform(scrollY, [0, 800], ['0%', '8%']);
+  const heroMedia = nonCommunityImage(siteSettings.hero_photo_url)
+    || nonCommunityImage(siteSettings.hero_bg_url)
+    || '/airo-assets/images/pages/home/about-community';
   const heroMediaIsVideo = /\.(mp4|webm|ogv|ogg)(?:$|[?#])/i.test(heroMedia);
   const churchAddress = siteSettings.map_address || siteSettings.address;
   const locationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(churchAddress)}`;
@@ -374,8 +399,12 @@ export default function HomePage() {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      {/* === SECTION: Loading Screen === */}
-      <LoadingScreen isLoading={isLoading} />
+      <LoadingScreen
+        isLoading={isLoading}
+        logoUrl={siteSettings.logo_url}
+        churchName={siteSettings.church_name}
+        tagline={siteSettings.tagline}
+      />
 
       <main>
 
@@ -559,10 +588,14 @@ export default function HomePage() {
                   </a>
                 </div>
               )}
-              {serviceTimes[0] && (
-                <div
+              {featuredService && (
+                <motion.div
+                  key={`${featuredService.day}-${featuredService.time}-${featuredService.label}`}
                   className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 max-w-[calc(100%-2.5rem)] sm:max-w-xs rounded-2xl p-4 sm:p-5 shadow-xl"
                   style={{ background: 'hsl(var(--card))', color: 'hsl(var(--foreground))' }}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Clock size={17} style={{ color: 'hsl(var(--primary))' }} />
@@ -570,17 +603,17 @@ export default function HomePage() {
                       Join us this week
                     </span>
                   </div>
-                  <p className="text-base font-bold">{serviceTimes[0].label}</p>
+                  <p className="text-base font-bold">                  {featuredService.label}</p>
                   <p className="text-sm mt-1" style={{ color: 'hsl(var(--muted-foreground))' }}>
-                    {serviceTimes[0].day} · {serviceTimes[0].time}
+                    {featuredService.day} · {featuredService.time}
                   </p>
-                  {serviceTimes[0].location && (
+                  {featuredService.location && (
                     <p className="flex items-center gap-1.5 text-xs mt-2" style={{ color: 'hsl(var(--muted-foreground))' }}>
                       <MapPin size={13} />
-                      {serviceTimes[0].location}
+                      {featuredService.location}
                     </p>
                   )}
-                </div>
+                </motion.div>
               )}
             </motion.div>
           </div>

@@ -24,14 +24,14 @@ describe('CookieBanner', () => {
     expect(document.querySelector('script[data-analytics="google"]')).toBeNull();
   });
 
-  it('saves the visitor preference and notifies consent listeners', async () => {
+  it('rejects optional cookies and notifies consent listeners', async () => {
     const user = userEvent.setup();
     const listener = vi.fn();
     window.addEventListener('cookie-consent-changed', listener);
     render(<CookieBanner />);
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: /essential cookies only/i }));
+      await user.click(screen.getByRole('button', { name: /reject optional/i }));
     });
 
     expect(JSON.parse(localStorage.getItem(CONSENT_KEY) || '{}')).toMatchObject({ analytics: false });

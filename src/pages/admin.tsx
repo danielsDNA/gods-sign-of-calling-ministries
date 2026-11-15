@@ -39,6 +39,7 @@ import { isVideoMediaUrl, isVideoPlatformUrl, parseHttpsMediaUrl } from '@/lib/m
 import { uploadChurchMedia } from '@/lib/supabase';
 import PageContentEditor from '@/components/admin/PageContentEditor';
 import { sanitizeRichTextHtml } from '@/lib/content-text';
+import { updateSiteSettingsCache } from '@/hooks/useSiteSettings';
 
 /* ── Types ── */
 interface SiteSettings { [key: string]: string }
@@ -226,6 +227,13 @@ function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onCo
 /* ── API helpers ── */
 const ADMIN_REQUEST_TIMEOUT_MS = 25_000;
 
+class ApiRequestError extends Error {
+  constructor(message: string, readonly retryAfterSeconds?: number) {
+    super(message);
+    this.name = 'ApiRequestError';
+  }
+}
+
 async function api<T = Record<string, unknown>>(method: string, path: string, body?: unknown): Promise<T> {
   const controller = new window.AbortController();
   const timeout = window.setTimeout(() => controller.abort(), ADMIN_REQUEST_TIMEOUT_MS);
@@ -237,7 +245,13 @@ async function api<T = Record<string, unknown>>(method: string, path: string, bo
       signal: controller.signal,
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'Request failed');
+    if (!res.ok) {
+      const retryAfter = Number(res.headers.get('Retry-After'));
+      throw new ApiRequestError(
+        data.error || 'Request failed',
+        res.status === 429 && Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : undefined,
+      );
+    }
     return data as T;
   } catch (error: unknown) {
     if (controller.signal.aborted) throw new Error('The server took too long to respond. Please retry.');
@@ -267,7 +281,9 @@ export default function AdminPage() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [loginWaitSeconds, setLoginWaitSeconds] = useState(0);
   const [loginLoading, setLoginLoading] = useState(false);
+  const loginLocked = loginWaitSeconds > 0;
   const [showForgot, setShowForgot] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSent, setForgotSent] = useState(false);
@@ -303,6 +319,7 @@ export default function AdminPage() {
   const [trashLoading, setTrashLoading] = useState(false);
   const [trashError, setTrashError] = useState('');
   const [trashLoadAttempt, setTrashLoadAttempt] = useState(0);
+
   const [restoringTrashId, setRestoringTrashId] = useState<number | null>(null);
   const [permissionDrafts, setPermissionDrafts] = useState<Record<number, AdminPermission[]>>({});
   const [savingPermissionsFor, setSavingPermissionsFor] = useState<number | null>(null);
@@ -320,6 +337,14 @@ export default function AdminPage() {
   const [pwNew, setPwNew] = useState('');
   const [pwConfirm, setPwConfirm] = useState('');
   const [showPw, setShowPw] = useState(false);
+
+  useEffect(() => {
+    if (!loginLocked) return;
+    const timer = window.setInterval(() => {
+      setLoginWaitSeconds(seconds => Math.max(0, seconds - 1));
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [loginLocked]);
 
   const toast = useCallback((type: 'success' | 'error', message: string) => {
     setToasts(prev => [...prev, { id: Date.now(), type, message }]);
@@ -531,6 +556,7 @@ export default function AdminPage() {
   /* ── Login ── */
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loginLocked) return;
     setLoginLoading(true); setLoginError('');
     try {
       const d = await api<{ user: AdminBootstrapResponse['user'] }>('POST', '/api/admin/login', { email: loginEmail, password: loginPassword });
@@ -541,6 +567,9 @@ export default function AdminPage() {
       setAdminPermissions(d.user.permissions || []);
     } catch (err: unknown) {
       setLoginError(err instanceof Error ? err.message : 'Login failed');
+      if (err instanceof ApiRequestError && err.retryAfterSeconds) {
+        setLoginWaitSeconds(err.retryAfterSeconds);
+      }
     } finally { setLoginLoading(false); }
   };
 
@@ -570,10 +599,16 @@ export default function AdminPage() {
   };
 
   const handleLogout = async () => {
-    await api('POST', '/api/admin/logout', {}).catch(() => {});
-    setAuthed(false);
-    setAdminEmail('');
-    setAdminDisplayName('');
+    try {
+      await api('POST', '/api/admin/logout', {});
+      toast('success', 'You have signed out.');
+    } catch (error: unknown) {
+      toast('error', error instanceof Error ? error.message : 'Unable to securely sign out.');
+    } finally {
+      setAuthed(false);
+      setAdminEmail('');
+      setAdminDisplayName('');
+    }
   };
 
   /* ── Settings save ── */
@@ -589,7 +624,7 @@ export default function AdminPage() {
       const giveDetailKeys = new Set([
         'give_mtn_code', 'give_mtn_number', 'give_mtn_name', 'give_airtel_code', 'give_airtel_number', 'give_airtel_name',
         'give_bank_name', 'give_bank_account_name', 'give_bank_account_number', 'give_bank_branch',
-        'give_campaign_title', 'give_reason', 'give_image_url',
+        'give_campaign_title', 'give_reason', 'give_payment_instructions', 'give_image_url',
       ]);
       const socialKeys = new Set(['facebook_url', 'instagram_url', 'youtube_url', 'twitter_url', 'stay_connected_enabled']);
       const allowedUpdates = adminRole === 'owner'
@@ -608,6 +643,7 @@ export default function AdminPage() {
       }
       await api('PUT', '/api/admin/settings', allowedUpdates);
       setSettings(prev => ({ ...prev, ...allowedUpdates }));
+      updateSiteSettingsCache(allowedUpdates);
       toast('success', 'Settings saved');
     } catch (error: unknown) { toast('error', error instanceof Error ? error.message : 'Save failed'); }
     finally { setSaving(false); }
@@ -1019,6 +1055,11 @@ export default function AdminPage() {
             </div>
             <form onSubmit={handleLogin} className="admin-form">
               {loginError && <div className="admin-error-banner"><AlertCircle size={16} />{loginError}</div>}
+              {loginLocked && (
+                <p className="admin-form__hint" role="status" aria-live="polite">
+                  Try signing in again in {Math.floor(loginWaitSeconds / 60)}:{String(loginWaitSeconds % 60).padStart(2, '0')}.
+                </p>
+              )}
               <div className="admin-field">
                 <label htmlFor="login-email">Email address</label>
                 <input id="login-email" name="email" type="email" autoComplete="username" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@example.org" required autoFocus />
@@ -1030,8 +1071,12 @@ export default function AdminPage() {
                   <button type="button" className="admin-input-eye" aria-label={showPw ? 'Hide password' : 'Show password'} onClick={() => setShowPw(p => !p)}>{showPw ? <EyeOff size={16} /> : <Eye size={16} />}</button>
                 </div>
               </div>
-              <button type="submit" className="admin-btn admin-btn--primary admin-btn--full" disabled={loginLoading}>
-                {loginLoading ? <><Loader2 size={16} className="admin-spin" /> Signing in…</> : 'Sign in'}
+              <button type="submit" className="admin-btn admin-btn--primary admin-btn--full" disabled={loginLoading || loginLocked}>
+                {loginLoading
+                  ? <><Loader2 size={16} className="admin-spin" /> Signing in…</>
+                  : loginLocked
+                    ? `Try again in ${Math.floor(loginWaitSeconds / 60)}:${String(loginWaitSeconds % 60).padStart(2, '0')}`
+                    : 'Sign in'}
               </button>
               <button type="button" className="admin-btn admin-btn--ghost admin-btn--full" onClick={() => { setShowForgot(true); setForgotEmail(loginEmail); }}>Forgot password?</button>
             </form>
@@ -1092,7 +1137,9 @@ export default function AdminPage() {
         {/* Sidebar */}
         <aside className="admin-sidebar">
           <div className="admin-sidebar__brand">
-            <img className="admin-sidebar__logo" src={settings.logo_url || '/community.png'} alt="" />
+            {settings.logo_url
+              ? <img className="admin-sidebar__logo" src={settings.logo_url} alt="" />
+              : <Church className="admin-sidebar__logo" aria-hidden="true" />}
             <div>
               <div className="admin-sidebar__name">{settings.church_name || 'Church'}</div>
               <div className="admin-sidebar__role">{adminDisplayName || (adminRole === 'owner' ? 'Super Admin' : 'Editor')}</div>
@@ -2429,8 +2476,8 @@ function GivingTab({ settings, onSave, onToast, saving, role, canUploadMedia }: 
       onToast('error', 'Use a valid HTTPS image URL or a local church image.');
       return;
     }
-    if (f('give_campaign_title').length > 120 || f('give_reason').length > 2000) {
-      onToast('error', 'Keep the fundraising heading under 120 characters and description under 2,000 characters.');
+    if (f('give_campaign_title').length > 120 || f('give_reason').length > 2000 || f('give_payment_instructions').length > 5000) {
+      onToast('error', 'Keep the fundraising heading under 120 characters, description under 2,000, and payment instructions under 5,000.');
       return;
     }
     onSave(form);
@@ -2452,8 +2499,12 @@ function GivingTab({ settings, onSave, onToast, saving, role, canUploadMedia }: 
             <input id="give-campaign-title" name="give_campaign_title" value={f('give_campaign_title')} onChange={event => set('give_campaign_title', event.target.value)} placeholder="What your giving supports" maxLength={120} />
           </div>
           <div className="admin-field admin-field--full">
-            <label htmlFor="give-reason">Why we are raising funds / what gifts support</label>
-            <textarea id="give-reason" name="give_reason" value={f('give_reason')} onChange={event => set('give_reason', event.target.value)} rows={4} maxLength={2000} placeholder="Share the purpose of this fundraising or how donations will support the ministry." />
+            <label>Why we are raising funds / what gifts support</label>
+            <RichEditor value={f('give_reason')} onChange={value => set('give_reason', value)} label="Fundraising purpose" placeholder="Share the purpose of this fundraising or how donations will support the ministry." />
+          </div>
+          <div className="admin-field admin-field--full">
+            <label>Payment steps (optional)</label>
+            <RichEditor value={f('give_payment_instructions')} onChange={value => set('give_payment_instructions', value)} label="Payment instructions" placeholder="Add clear steps for completing a donation." />
           </div>
           <div className="admin-field admin-field--full">
             {canUploadMedia ? (
@@ -2485,6 +2536,21 @@ function GivingTab({ settings, onSave, onToast, saving, role, canUploadMedia }: 
               <input name="give_editor_details_enabled" type="checkbox" checked={f('give_editor_details_enabled') === 'true'} onChange={event => set('give_editor_details_enabled', String(event.target.checked))} />
               Allow admins with Site Info permission to edit fundraising details and payment account information
             </label>
+            <label className="admin-check admin-field--full">
+              <input name="whatsapp_float_enabled" type="checkbox" checked={f('whatsapp_float_enabled') === 'true'} onChange={event => set('whatsapp_float_enabled', String(event.target.checked))} />
+              Show the floating WhatsApp contact button
+            </label>
+            <div className="admin-field">
+              <label htmlFor="whatsapp-number">WhatsApp number</label>
+              <input id="whatsapp-number" name="whatsapp_number" type="tel" value={f('whatsapp_number')} onChange={event => set('whatsapp_number', event.target.value)} placeholder="+256 7XX XXX XXX" autoComplete="tel" />
+            </div>
+            <div className="admin-field">
+              <label htmlFor="whatsapp-position">Button position</label>
+              <select id="whatsapp-position" name="whatsapp_float_position" value={f('whatsapp_float_position') || 'right'} onChange={event => set('whatsapp_float_position', event.target.value)}>
+                <option value="left">Bottom left</option>
+                <option value="right">Bottom right</option>
+              </select>
+            </div>
             <label className="admin-check">
               <input name="give_mtn_enabled" type="checkbox" checked={f('give_mtn_enabled') === 'true'} onChange={event => set('give_mtn_enabled', String(event.target.checked))} />
               Show MTN Mobile Money

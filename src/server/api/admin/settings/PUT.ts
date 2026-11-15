@@ -5,6 +5,7 @@ import { siteSettings } from '../../../db/schema.js';
 import { requireAdmin } from '../auth.js';
 import type { AdminPermission } from '../../../../lib/admin-permissions.js';
 import { parseHttpsMediaUrl } from '../../../../lib/media-urls.js';
+import { sanitizeRichTextHtml } from '../../../../lib/content-text.js';
 
 const editorSettingKeys = new Set([
   'church_name',
@@ -33,6 +34,7 @@ const giveDetailKeys = new Set([
   'give_bank_branch',
   'give_campaign_title',
   'give_reason',
+  'give_payment_instructions',
   'give_image_url',
 ]);
 
@@ -44,6 +46,9 @@ const ownerOnlyGiveKeys = new Set([
   'give_mtn_enabled',
   'give_airtel_enabled',
   'give_bank_enabled',
+  'whatsapp_float_enabled',
+  'whatsapp_float_position',
+  'whatsapp_number',
 ]);
 
 function requiredPermissionForSetting(key: string): AdminPermission | null {
@@ -90,6 +95,15 @@ export default async function handler(req: Request, res: Response) {
     if (typeof updates.give_reason === 'string' && updates.give_reason.length > 2000) {
       return res.status(400).json({ error: 'Fundraising description must be 2,000 characters or fewer.' });
     }
+    if (typeof updates.give_payment_instructions === 'string' && updates.give_payment_instructions.length > 5000) {
+      return res.status(400).json({ error: 'Payment instructions must be 5,000 characters or fewer.' });
+    }
+    if (
+      typeof updates.whatsapp_float_position === 'string'
+      && !['left', 'right'].includes(updates.whatsapp_float_position)
+    ) {
+      return res.status(400).json({ error: 'WhatsApp button position must be left or right.' });
+    }
     if (typeof updates.give_image_url === 'string' && updates.give_image_url) {
       const imageUrl = updates.give_image_url;
       const safeLocalImage = imageUrl.startsWith('/') && !imageUrl.startsWith('//');
@@ -100,12 +114,15 @@ export default async function handler(req: Request, res: Response) {
     }
 
     for (const [key, value] of Object.entries(updates)) {
+      const safeValue = ['give_reason', 'give_payment_instructions'].includes(key)
+        ? sanitizeRichTextHtml(value)
+        : value;
       await db
         .insert(siteSettings)
-        .values({ key, value: String(value) })
+        .values({ key, value: safeValue })
         .onConflictDoUpdate({
           target: siteSettings.key,
-          set: { value: String(value) },
+          set: { value: safeValue },
         });
     }
 

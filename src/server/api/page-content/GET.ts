@@ -20,7 +20,6 @@ export default async function handler(req: Request, res: Response) {
       return;
     }
 
-    res.setHeader('Cache-Control', 'no-store');
     res.json({ content: row.content });
   } catch (error) {
     res.status(500).json({ error: 'Failed to load page content', message: String(error) });

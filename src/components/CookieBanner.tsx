@@ -110,16 +110,26 @@ export default function CookieBanner() {
       aria-describedby="cookie-banner-description"
     >
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div className="flex-1">
             <h2 className="mb-1 text-sm font-semibold text-gray-900">Cookie preferences</h2>
             <p id="cookie-banner-description" className="text-sm text-gray-600">
-              Essential cookies keep the website working. Accepting cookies also allows Google Analytics cookies to measure site visits. You can choose essential cookies only.
+            Necessary cookies keep the site working. Optional analytics cookies are only activated when you accept them.
             </p>
+          <details className="mt-2 text-sm text-gray-700">
+            <summary className="cursor-pointer font-medium">Cookie categories</summary>
+            <ul className="mt-2 space-y-1.5 pl-4">
+              <li><strong>Necessary:</strong> Required for secure sign-in and saved cookie preferences; always active.</li>
+              <li><strong>Functional:</strong> Support optional embedded or social features; none are activated by this banner.</li>
+              <li><strong>Analytics:</strong> Google Analytics measures visits and traffic sources; activated only after acceptance.</li>
+              <li><strong>Advertising:</strong> No advertising cookies are currently enabled.</li>
+            </ul>
+            <a className="mt-2 inline-block text-sm font-medium underline" href="/privacy">Read our Privacy Policy</a>
+          </details>
           </div>
           <div className="flex flex-shrink-0 items-center gap-3">
-            <Button size="sm" variant="secondary" onClick={() => saveConsent(false)} className="whitespace-nowrap">Essential cookies only</Button>
-            <Button size="sm" onClick={() => saveConsent(true)} className="whitespace-nowrap">Accept cookies</Button>
+          <Button size="sm" variant="secondary" onClick={() => saveConsent(false)} className="whitespace-nowrap">Reject optional</Button>
+          <Button size="sm" onClick={() => saveConsent(true)} className="whitespace-nowrap">Accept all</Button>
           </div>
         </div>
       </div>

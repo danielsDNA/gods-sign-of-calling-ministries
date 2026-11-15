@@ -61,6 +61,10 @@ interface Stat  { id: string; value: string; label: string; }
 interface TeamMember { id: string; name: string; role: string; bio: string; image: string; }
 interface CmsLeader { id: number; name: string; title: string | null; bio: string | null; imageUrl: string | null; }
 
+function nonCommunityImage(value: string | undefined): string {
+  return value && !/(^|\/)community\.png(?:[?#]|$)/i.test(value) ? value : '';
+}
+
 export default function AboutPage() {
   const { content: about } = usePageContent('about', defaultAbout);
   const storyBody  = about.story.body    as StoryParagraph[];
@@ -68,6 +72,9 @@ export default function AboutPage() {
   const stats      = about.stats         as Stat[];
   const mission = about.mission as AboutMission;
   const { settings } = useSiteSettings();
+  const aboutImage = nonCommunityImage(settings.about_image_url)
+    || nonCommunityImage(settings.about_bg_url)
+    || '/airo-assets/images/pages/home/about-community';
   const seoUrls = buildPageSeoUrls(useJsonLdSiteUrl(), '/about');
   const { items: cmsLeaders, usingFallback } = useCmsList<CmsLeader>('/api/leadership', []);
   const staticTeam = about.team as TeamMember[];
@@ -122,7 +129,7 @@ export default function AboutPage() {
         ================================================================ */}
         <section className="relative min-h-[420px] flex items-center overflow-hidden" style={{ background: 'hsl(var(--surface-alt))' }}>
           <img
-            src={settings.about_image_url || settings.about_bg_url || '/community.png'}
+            src={aboutImage}
             alt="God's Sign of Calling Revival Ministries community"
             loading="eager"
             fetchPriority="high"
@@ -230,7 +237,7 @@ export default function AboutPage() {
                     style={{ background: 'hsl(var(--primary) / 0.12)', borderRadius: '1rem' }}
                   />
                   <img
-                    src={settings.about_image_url || '/community.png'}
+                    src={aboutImage}
                     alt="God's Sign of Calling Revival Ministries community gathered together"
                     loading="lazy"
                     className="relative rounded-2xl w-full object-cover"

@@ -7,7 +7,7 @@ import { requireAdmin } from '../admin/auth.js';
 export default async function handler(req: Request, res: Response) {
   try {
     const all = req.query.all === 'true';
-    if (all && !await requireAdmin(req, res)) return;
+    if (all && !await requireAdmin(req, res, 'events')) return;
     const rows = all
       ? await db.select().from(events).orderBy(desc(events.startsAt))
       : await db.select().from(events).where(eq(events.published, true)).orderBy(desc(events.startsAt));

@@ -20,6 +20,7 @@ export const adminUsers = pgTable('admin_users', {
   displayName: varchar('display_name', { length: 100 }),
   role: varchar('role', { length: 50 }).notNull().default('editor'),
   permissions: jsonb('permissions').$type<AdminPermission[]>().notNull().default([...DEFAULT_ADMIN_PERMISSIONS]),
+  sessionVersion: integer('session_version').notNull().default(0),
   resetToken: varchar('reset_token', { length: 128 }),
   resetTokenExpiry: timestamptz('reset_token_expiry'),
   createdAt: timestamptz('created_at').notNull().defaultNow(),

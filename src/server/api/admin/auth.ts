@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
+import { eq, sql } from 'drizzle-orm';
 import { db } from '../../db/supabase-client.js';
 import { adminUsers } from '../../db/schema.js';
-import { eq } from 'drizzle-orm';
 import {
   ADMIN_SESSION_DURATION_MS,
   createAdminSessionToken,
@@ -21,8 +21,8 @@ function sessionSecret(): string {
   return secret;
 }
 
-export function setAdminSession(res: Response, userId: number, passwordHash: string): void {
-  const token = createAdminSessionToken(userId, passwordHash, sessionSecret());
+export function setAdminSession(res: Response, userId: number, passwordHash: string, sessionVersion = 0): void {
+  const token = createAdminSessionToken(userId, passwordHash, sessionSecret(), Date.now(), sessionVersion);
   res.cookie('admin_session', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -36,7 +36,7 @@ export async function requireAdmin(
   req: Request,
   res: Response,
   permissionOverride?: AdminPermission,
-): Promise<{ id: number; email: string; displayName: string | null; role: string; permissions: AdminPermission[] } | null> {
+): Promise<{ id: number; email: string; displayName: string | null; role: string; permissions: AdminPermission[]; sessionVersion: number } | null> {
   const token = req.cookies?.admin_session;
   if (typeof token !== 'string') {
     res.status(401).json({ error: 'Not authenticated' });
@@ -58,9 +58,10 @@ export async function requireAdmin(
     role: adminUsers.role,
     permissions: adminUsers.permissions,
     passwordHash: adminUsers.passwordHash,
+    sessionVersion: adminUsers.sessionVersion,
   }).from(adminUsers).where(eq(adminUsers.id, userId)).limit(1);
   const validUserId = user
-    ? verifyAdminSessionToken(token, user.passwordHash, sessionSecret())
+    ? verifyAdminSessionToken(token, user.passwordHash, sessionSecret(), Date.now(), user.sessionVersion)
     : null;
   if (!user || validUserId !== user.id) {
     res.clearCookie('admin_session', { path: '/' });
@@ -86,5 +87,35 @@ export async function requireAdmin(
     res.status(403).json({ error: 'You do not have permission to perform this task' });
     return null;
   }
-  return { id: user.id, email: user.email ?? '', displayName: user.displayName, role, permissions };
+  return {
+    id: user.id,
+    email: user.email ?? '',
+    displayName: user.displayName,
+    role,
+    permissions,
+    sessionVersion: user.sessionVersion,
+  };
+}
+
+export async function revokeAdminSession(req: Request, res: Response): Promise<void> {
+  const token = req.cookies?.admin_session;
+  res.clearCookie('admin_session', { path: '/' });
+  if (typeof token !== 'string') return;
+
+  const userId = Number(token.split('.', 1)[0]);
+  if (!Number.isSafeInteger(userId) || userId < 1) return;
+
+  const [user] = await db.select({
+    id: adminUsers.id,
+    passwordHash: adminUsers.passwordHash,
+    sessionVersion: adminUsers.sessionVersion,
+  }).from(adminUsers).where(eq(adminUsers.id, userId)).limit(1);
+  if (
+    !user
+    || verifyAdminSessionToken(token, user.passwordHash, sessionSecret(), Date.now(), user.sessionVersion) !== user.id
+  ) return;
+
+  await db.update(adminUsers)
+    .set({ sessionVersion: sql`${adminUsers.sessionVersion} + 1` })
+    .where(eq(adminUsers.id, user.id));
 }

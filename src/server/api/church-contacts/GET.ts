@@ -9,7 +9,6 @@ export default async function handler(_req: Request, res: Response) {
     const rows = await db.select().from(churchContacts)
       .where(eq(churchContacts.active, true))
       .orderBy(asc(churchContacts.sortOrder));
-    res.setHeader('Cache-Control', 'no-store');
     res.json(rows);
   } catch (error) {
     console.error('Unable to load church contacts:', error instanceof Error ? error.message : 'Unknown error');

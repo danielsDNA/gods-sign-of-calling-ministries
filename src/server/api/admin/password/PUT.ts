@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { db } from '../../../db/supabase-client.js';
 import { adminUsers } from '../../../db/schema.js';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { requireAdmin, setAdminSession } from '../auth.js';
 
 export default async function handler(req: Request, res: Response) {
@@ -24,8 +24,12 @@ export default async function handler(req: Request, res: Response) {
     if (!valid) return res.status(401).json({ error: 'Current password is incorrect' });
 
     const hash = await bcrypt.hash(newPassword, 12);
-    await db.update(adminUsers).set({ passwordHash: hash }).where(eq(adminUsers.id, admin.id));
-    setAdminSession(res, admin.id, hash);
+    const [updatedUser] = await db.update(adminUsers)
+      .set({ passwordHash: hash, sessionVersion: sql`${adminUsers.sessionVersion} + 1` })
+      .where(eq(adminUsers.id, admin.id))
+      .returning({ sessionVersion: adminUsers.sessionVersion });
+    if (!updatedUser) return res.status(500).json({ error: 'Unable to update the admin password.' });
+    setAdminSession(res, admin.id, hash, updatedUser.sessionVersion);
 
     res.json({ ok: true });
   } catch (err) {

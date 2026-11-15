@@ -18,31 +18,45 @@ import {
 
 export async function loadAdminBootstrap(role: string, permissions: AdminPermission[]) {
   const can = (permission: AdminPermission) => role === 'owner' || permissions.includes(permission);
-  const settingsRows = await db.select().from(siteSettings);
+  const [
+    settingsRows,
+    phrases,
+    sermonsList,
+    eventsList,
+    prayerList,
+    contactRequestList,
+    ministryList,
+    leaders,
+    times,
+    gallery,
+    accounts,
+  ] = await Promise.all([
+    db.select().from(siteSettings),
+    can('phrases') ? db.select().from(heroPhrases)
+      .where(eq(heroPhrases.active, true))
+      .orderBy(asc(heroPhrases.sortOrder)) : Promise.resolve([]),
+    can('sermons') ? db.select().from(sermons).orderBy(desc(sermons.createdAt)) : Promise.resolve([]),
+    can('events') ? db.select().from(events).orderBy(desc(events.startsAt)) : Promise.resolve([]),
+    can('requests') ? db.select().from(prayerRequests).orderBy(desc(prayerRequests.createdAt)) : Promise.resolve([]),
+    can('requests') ? db.select().from(contactRequests).orderBy(desc(contactRequests.createdAt)) : Promise.resolve([]),
+    can('ministries') ? db.select().from(ministries).orderBy(asc(ministries.sortOrder)) : Promise.resolve([]),
+    can('leadership') ? db.select().from(leadershipTeam).orderBy(asc(leadershipTeam.sortOrder)) : Promise.resolve([]),
+    can('service-times') ? db.select().from(serviceTimes).orderBy(asc(serviceTimes.sortOrder)) : Promise.resolve([]),
+    can('gallery') ? db.select().from(galleryImages).orderBy(asc(galleryImages.sortOrder)) : Promise.resolve([]),
+    role === 'owner'
+      ? db.select({
+          id: adminUsers.id,
+          email: adminUsers.email,
+          displayName: adminUsers.displayName,
+          role: adminUsers.role,
+          permissions: adminUsers.permissions,
+          createdAt: adminUsers.createdAt,
+        }).from(adminUsers).orderBy(asc(adminUsers.email))
+      : Promise.resolve([]),
+  ]);
   const editorsCanManageGiveDetails = settingsRows.some(setting =>
     setting.key === 'give_editor_details_enabled' && setting.value === 'true'
   );
-  const phrases = can('phrases') ? await db.select().from(heroPhrases)
-    .where(eq(heroPhrases.active, true))
-    .orderBy(asc(heroPhrases.sortOrder)) : [];
-  const sermonsList = can('sermons') ? await db.select().from(sermons).orderBy(desc(sermons.createdAt)) : [];
-  const eventsList = can('events') ? await db.select().from(events).orderBy(desc(events.startsAt)) : [];
-  const prayerList = can('requests') ? await db.select().from(prayerRequests).orderBy(desc(prayerRequests.createdAt)) : [];
-  const contactRequestList = can('requests') ? await db.select().from(contactRequests).orderBy(desc(contactRequests.createdAt)) : [];
-  const ministryList = can('ministries') ? await db.select().from(ministries).orderBy(asc(ministries.sortOrder)) : [];
-  const leaders = can('leadership') ? await db.select().from(leadershipTeam).orderBy(asc(leadershipTeam.sortOrder)) : [];
-  const times = can('service-times') ? await db.select().from(serviceTimes).orderBy(asc(serviceTimes.sortOrder)) : [];
-  const gallery = can('gallery') ? await db.select().from(galleryImages).orderBy(asc(galleryImages.sortOrder)) : [];
-  const accounts = role === 'owner'
-    ? await db.select({
-        id: adminUsers.id,
-        email: adminUsers.email,
-        displayName: adminUsers.displayName,
-        role: adminUsers.role,
-        permissions: adminUsers.permissions,
-        createdAt: adminUsers.createdAt,
-      }).from(adminUsers).orderBy(asc(adminUsers.email))
-    : [];
 
   const settings: Record<string, string> = {};
   for (const setting of settingsRows) {

@@ -333,6 +333,14 @@ app.use("/api", (req, res, next) => {
 	if (req.method === "GET") res.setHeader("Cache-Control", "no-store");
 	next();
 });
+const publicContentCache = (req: Request, res: Response, next: NextFunction) => {
+	if (req.query.all === "true") {
+		res.setHeader("Cache-Control", "private, no-store");
+	} else {
+		res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+	}
+	next();
+};
 
 // <api-registrations>
 app.post("/api/admin/login", loginRateLimit, admin__login__post);
@@ -351,22 +359,22 @@ app.put("/api/admin/users/:id", admin__users__id__put);
 app.post("/api/contact/:formName", contact__formName__post);
 app.post("/api/contact-messages", contact_messages__post);
 app.get("/api/health", health__get);
-app.get("/api/site-settings", site_settings__get);
-app.get("/api/page-content", page_content__get);
+app.get("/api/site-settings", publicContentCache, site_settings__get);
+app.get("/api/page-content", publicContentCache, page_content__get);
 app.put("/api/admin/page-content/:page", admin__page_content__put);
-app.get("/api/church-contacts", church_contacts__get);
+app.get("/api/church-contacts", publicContentCache, church_contacts__get);
 app.get("/api/admin/church-contacts", admin__church_contacts__get);
 app.put("/api/admin/church-contacts", admin__church_contacts__put);
 // Auth
 app.post("/api/admin/forgot-password", passwordResetRateLimit, admin__forgot_password__post);
 app.post("/api/admin/reset-password", passwordResetRateLimit, admin__reset_password__post);
 // Sermons
-app.get("/api/sermons", sermons__get);
+app.get("/api/sermons", publicContentCache, sermons__get);
 app.post("/api/admin/sermons", admin__sermons__post);
 app.put("/api/admin/sermons/:id", admin__sermons__id__put);
 app.delete("/api/admin/sermons/:id", admin__sermons__id__delete);
 // Events
-app.get("/api/events", events__get);
+app.get("/api/events", publicContentCache, events__get);
 app.post("/api/admin/events", admin__events__post);
 app.put("/api/admin/events/:id", admin__events__id__put);
 app.delete("/api/admin/events/:id", admin__events__id__delete);
@@ -376,21 +384,21 @@ app.post("/api/prayer", prayer__post);
 app.put("/api/admin/prayer/:id", admin__prayer__id__put);
 app.delete("/api/admin/prayer/:id", admin__prayer__id__delete);
 // Ministries
-app.get("/api/ministries", ministries__get);
+app.get("/api/ministries", publicContentCache, ministries__get);
 app.post("/api/admin/ministries", admin__ministries__post);
 app.put("/api/admin/ministries/:id", admin__ministries__id__put);
 app.delete("/api/admin/ministries/:id", admin__ministries__id__delete);
 // Leadership
-app.get("/api/leadership", leadership__get);
+app.get("/api/leadership", publicContentCache, leadership__get);
 app.post("/api/admin/leadership", admin__leadership__post);
 app.put("/api/admin/leadership/:id", admin__leadership__id__put);
 app.delete("/api/admin/leadership/:id", admin__leadership__id__delete);
 // Service times
-app.get("/api/service-times", service_times__get);
+app.get("/api/service-times", publicContentCache, service_times__get);
 app.put("/api/admin/service-times", admin__service_times__put);
 app.delete("/api/admin/service-times/:id", admin__service_times__id__delete);
 // Gallery
-app.get("/api/gallery", gallery__get);
+app.get("/api/gallery", publicContentCache, gallery__get);
 app.get("/api/admin/gallery", admin__gallery__get);
 app.post("/api/admin/gallery", admin__gallery__post);
 app.put("/api/admin/gallery/:id", admin__gallery__id__put);

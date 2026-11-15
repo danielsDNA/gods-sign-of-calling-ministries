@@ -11,8 +11,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
-import { Landmark, Menu, X, Heart } from 'lucide-react';
+import { Church, Landmark, Menu, X } from 'lucide-react';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { fetchPublicJson } from '@/lib/public-api-cache';
+import { sanitizeRichTextHtml } from '@/lib/content-text';
 
 interface PublicEvent {
   id: number;
@@ -100,10 +102,10 @@ export default function Header() {
       return;
     }
 
-    void window.fetch('/api/events', { cache: 'no-store' })
-      .then(async response => {
-        if (!response.ok) throw new Error(`Unable to load event announcement (${response.status})`);
-        const events = await response.json() as PublicEvent[];
+    void fetchPublicJson('/api/events')
+      .then(result => {
+        if (!Array.isArray(result)) throw new Error('The server returned invalid event data.');
+        const events = result as PublicEvent[];
         const now = Date.now();
         const nextEvent = events
           .filter(event => new Date(event.startsAt).getTime() > now)
@@ -173,21 +175,15 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 md:h-20">
 
             {/* Logo */}
-            <Link to="/" className="brand-logo-plaque flex items-center shrink-0 min-w-0">
+            <Link to="/" className="brand-logo-plaque flex items-center shrink-0 min-w-0" aria-label="Home">
               {settings.logo_url ? (
                 <img
                   src={settings.logo_url}
                   alt={`${settings.church_name || "God's Sign of Calling Revival Ministries"} logo`}
-                  className="block h-auto max-h-10 w-auto max-w-[140px] object-contain self-center"
+                  className="block h-auto max-h-10 w-auto max-w-[96px] object-contain self-center sm:max-w-[140px]"
                 />
               ) : (
-                <>
-                  <img src="/community.png" alt="" className="block h-9 w-10 object-contain" />
-                  <span className="hidden max-w-[9rem] flex-col leading-tight text-white sm:flex" style={{ fontFamily: 'var(--font-hero)' }}>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.08em]">God&apos;s Sign of Calling</span>
-                    <span className="text-xs font-semibold">Revival Ministries</span>
-                  </span>
-                </>
+                <Church className="h-9 w-9 shrink-0 text-[hsl(var(--primary-light))]" aria-hidden="true" />
               )}
             </Link>
 
@@ -352,11 +348,9 @@ export default function Header() {
               </button>
               <h2 id="give-modal-title" className="sr-only">Give to {settings.church_name || 'the church'}</h2>
               <div className="give-campaign-banner">
-                <img
-                  src={settings.logo_url || '/community.png'}
-                  alt=""
-                  className="give-campaign-banner__logo"
-                />
+                {settings.logo_url
+                  ? <img src={settings.logo_url} alt="" className="give-campaign-banner__logo" />
+                  : <Church className="give-campaign-banner__logo" style={{ color: '#174b20' }} aria-hidden="true" />}
                 <div className="give-campaign-banner__title">
                   <span>Fund</span>
                   <span>Raising</span>
@@ -373,7 +367,15 @@ export default function Header() {
               {(settings.give_campaign_title || settings.give_reason || settings.give_image_url) && (
                 <div className="give-campaign">
                   {settings.give_campaign_title && <h3>{settings.give_campaign_title}</h3>}
-                  {settings.give_reason && <p>{settings.give_reason}</p>}
+                  {settings.give_reason && (
+                    <div className="give-rich-text" dangerouslySetInnerHTML={{ __html: sanitizeRichTextHtml(settings.give_reason) }} />
+                  )}
+                </div>
+              )}
+              {settings.give_payment_instructions && (
+                <div className="give-campaign give-payment-instructions">
+                  <h3>How to give</h3>
+                  <div className="give-rich-text" dangerouslySetInnerHTML={{ __html: sanitizeRichTextHtml(settings.give_payment_instructions) }} />
                 </div>
               )}
               {paymentMethods.length > 0 ? (

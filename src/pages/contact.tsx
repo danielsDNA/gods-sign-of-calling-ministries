@@ -276,12 +276,13 @@ export default function ContactPage() {
                             className="text-sm font-medium"
                             style={{ color: 'hsl(var(--foreground))' }}
                           >
-                            Full Name <span style={{ color: 'hsl(var(--destructive))' }}>*</span>
+                            Full Name
                           </label>
                           <input
                             id="contact-name"
                             name="name"
                             type="text"
+                            autoComplete="name"
                             required
                             placeholder="Your name"
                             className="px-4 py-2.5 rounded-lg text-sm outline-none transition-all duration-200 focus:ring-2"
@@ -298,12 +299,13 @@ export default function ContactPage() {
                             className="text-sm font-medium"
                             style={{ color: 'hsl(var(--foreground))' }}
                           >
-                            Email Address <span style={{ color: 'hsl(var(--destructive))' }}>*</span>
+                            Email Address
                           </label>
                           <input
                             id="contact-email"
                             name="email"
                             type="email"
+                            autoComplete="email"
                             required
                             placeholder="you@example.com"
                             className="px-4 py-2.5 rounded-lg text-sm outline-none transition-all duration-200 focus:ring-2"
@@ -332,7 +334,8 @@ export default function ContactPage() {
                           id="contact-phone"
                           name="phone"
                           type="tel"
-                          placeholder="+1 (555) 000-0000"
+                          autoComplete="tel"
+                          placeholder="+256 7XX XXX XXX"
                           className="px-4 py-2.5 rounded-lg text-sm outline-none transition-all duration-200 focus:ring-2"
                           style={{
                             background: 'hsl(var(--background))',
@@ -349,7 +352,7 @@ export default function ContactPage() {
                           className="text-sm font-medium"
                           style={{ color: 'hsl(var(--foreground))' }}
                         >
-                          What can we help with? <span style={{ color: 'hsl(var(--destructive))' }}>*</span>
+                          What can we help with?
                         </label>
                         <select
                           id="contact-topic"
@@ -377,7 +380,7 @@ export default function ContactPage() {
                           className="text-sm font-medium"
                           style={{ color: 'hsl(var(--foreground))' }}
                         >
-                          Message <span style={{ color: 'hsl(var(--destructive))' }}>*</span>
+                          Message
                         </label>
                         <textarea
                           id="contact-message"

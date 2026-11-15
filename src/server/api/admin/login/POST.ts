@@ -19,7 +19,7 @@ export default async function handler(req: Request, res: Response) {
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
 
-    setAdminSession(res, user.id, user.passwordHash);
+    setAdminSession(res, user.id, user.passwordHash, user.sessionVersion);
     res.setHeader('Cache-Control', 'private, no-store');
     res.json({
       ok: true,

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { fetchPublicJson } from '@/lib/public-api-cache';
 
 interface CmsListState<T> {
   items: T[];
@@ -14,7 +15,6 @@ export function useCmsList<T>(path: string, fallback: T[]): CmsListState<T> {
 
   useEffect(() => {
     let active = true;
-    const controller = new window.AbortController();
     let cachedItems: T[] | null = null;
     setState(current => ({ ...current, loading: true, error: null }));
 
@@ -33,10 +33,8 @@ export function useCmsList<T>(path: string, fallback: T[]): CmsListState<T> {
       console.error(`Unable to read cached public CMS content for ${path}:`, error);
     }
 
-    window.fetch(path, { signal: controller.signal, cache: 'no-store' })
-      .then(async response => {
-        if (!response.ok) throw new Error(`CMS request failed (${response.status})`);
-        const rows: unknown = await response.json();
+    fetchPublicJson(path)
+      .then(rows => {
         if (!Array.isArray(rows)) throw new Error('CMS returned an invalid list');
         const items = rows as T[];
         if (active) {
@@ -49,7 +47,7 @@ export function useCmsList<T>(path: string, fallback: T[]): CmsListState<T> {
         }
       })
       .catch((error: unknown) => {
-        if (!active || controller.signal.aborted) return;
+        if (!active) return;
         console.error(`Unable to load public CMS content from ${path}:`, error);
         setState({
           items: cachedItems ?? fallbackRef.current,
@@ -61,7 +59,6 @@ export function useCmsList<T>(path: string, fallback: T[]): CmsListState<T> {
 
     return () => {
       active = false;
-      controller.abort();
     };
   }, [path]);
 

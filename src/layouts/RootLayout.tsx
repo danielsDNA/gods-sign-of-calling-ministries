@@ -3,6 +3,7 @@ import { type ReactNode } from 'react';
 import { ScrollRestoration, useLocation } from 'react-router';
 
 import HomepageSameAsJsonLd from '@/components/HomepageSameAsJsonLd';
+import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
 import Footer from '@/layouts/parts/Footer';
 import Header from '@/layouts/parts/Header';
 import Website from '@/layouts/Website';
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <Header />
       {children}
       <Footer />
+      <WhatsAppFloatingButton />
     </Website>
   );
 }

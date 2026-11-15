@@ -23,4 +23,26 @@ describe('createRateLimiter', () => {
     expect(res.setHeader).toHaveBeenCalledWith('Retry-After', expect.any(String));
     expect(res.json).toHaveBeenCalledWith({ error: 'Please retry later.' });
   });
+
+  it('increases the retry delay after repeated blocked attempts', () => {
+    const limiter = createRateLimiter({ limit: 1, windowMs: 60_000, message: 'Please retry later.' });
+    const req = { ip: '192.0.2.2' } as Request;
+    const next = vi.fn();
+    const retryDelays: string[] = [];
+    const res = {
+      setHeader: vi.fn((_name: string, value: string) => retryDelays.push(value)),
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn(),
+    } as unknown as Response;
+    const now = vi.spyOn(Date, 'now').mockReturnValue(1_000);
+
+    limiter(req, res, next);
+    limiter(req, res, next);
+    now.mockReturnValue(61_000);
+    limiter(req, res, next);
+    limiter(req, res, next);
+
+    expect(retryDelays).toEqual(['60', '120']);
+    now.mockRestore();
+  });
 });
